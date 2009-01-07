@@ -26,34 +26,56 @@ DBHOST="localhost"
 
 ########################################################################
 
-PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin"A
+# command shortcut
+MYSQL="mysql -u${DBUSER} -p${DBPASS} -h${DBHOST} --skip-column-names"
+
+delete_loop() {
+	DB=$1
+	TABLE=$2
+	MTABLE=$3
+	COL=$4
+	MSTART=$5
+
+	while :; do
+		RC=$(
+			$MYSQL $DB -e "INSERT INTO $MTABLE SELECT * FROM $TABLE
+				WHERE $COL >= '$MSTART'
+				AND $COL < DATE_ADD('$MSTART', INTERVAL 1 MONTH) LIMIT 1000;
+				SELECT ROW_COUNT()"
+		)
+
+		test "$RC" = 0 && break
+
+		$MYSQL $DB -e "DELETE $TABLE FROM $TABLE
+			LEFT JOIN $MTABLE
+			ON $TABLE.id = $MTABLE.id
+			WHERE $MTABLE.id IS NOT NULL"
+	done
+}
+
+########################################################################
+
+PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin"
 for CMONTH in `seq 0 $((MONTHS_BACK-1))`; do 
 
-TMONTHS=$((CMONTH+MONTHS))
-TSTAMP=$(date +%Y%m -d "${TMONTHS} months ago")
+	TMONTHS=$((CMONTH+MONTHS))
+	TSTAMPL=$(date +%Y-%m -d "${TMONTHS} months ago")
+	TSTAMP=$(date +%Y%m -d "${TMONTHS} months ago")
+	MSTART="$TSTAMPL-01 00:00:00"
 
-for TABLE in ${ACC_TABLES}; do
-	mysql -u${DBUSER} -p${DBPASS} -h${DBHOST} ${ACC_DB} <<EOF
-		CREATE TABLE IF NOT EXISTS ${TABLE}_${TSTAMP} LIKE ${TABLE};
-		START TRANSACTION;
-		INSERT INTO ${TABLE}_${TSTAMP} SELECT * FROM ${TABLE}
-			WHERE EXTRACT(YEAR_MONTH FROM time)='${TSTAMP}';
-		DELETE FROM ${TABLE} 
-			WHERE EXTRACT(YEAR_MONTH FROM time)='${TSTAMP}';
-		COMMIT;
-EOF
-done
+	for TABLE in ${ACC_TABLES}; do
+		MTABLE="${TABLE}_${TSTAMP}"
 
-for TABLE in ${CDR_TABLES}; do
-	mysql -u${DBUSER} -p${DBPASS} -h${DBHOST} ${CDR_DB} <<EOF
-		CREATE TABLE IF NOT EXISTS ${TABLE}_${TSTAMP} LIKE ${TABLE};
-		START TRANSACTION;
-		INSERT INTO ${TABLE}_${TSTAMP} SELECT * FROM ${TABLE}
-			WHERE EXTRACT(YEAR_MONTH FROM start_time)='${TSTAMP}';
-		DELETE FROM ${TABLE} 
-			WHERE EXTRACT(YEAR_MONTH FROM start_time)='${TSTAMP}';
-		COMMIT;
-EOF
-done
+		$MYSQL $ACC_DB -e "CREATE TABLE IF NOT EXISTS $MTABLE LIKE $TABLE"
 
+		delete_loop $ACC_DB $TABLE $MTABLE time $MSTART
+	done
+
+	for TABLE in ${CDR_TABLES}; do
+		MTABLE="${TABLE}_${TSTAMP}"
+
+		$MYSQL $CDR_DB -e "CREATE TABLE IF NOT EXISTS $MTABLE LIKE $TABLE"
+
+		delete_loop $CDR_DB $TABLE $MTABLE start_time $MSTART
+	done
 done
