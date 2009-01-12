@@ -10,6 +10,12 @@ MONTHS=3
 # backup them
 MONTHS_BACK=6
 
+# archive tables older than $ARCHIVE_MONTHS will be dumped to a file,
+# gzipped and then dropped afterwards
+ARCHIVE_MONTHS=12
+# drop the dump files into $ARCHIVE_DIR
+ARCHIVE_DIR=/tmp
+
 # accounting database on proxies (openser) or db1 (accounting)
 ACC_DB="accounting"
 # accounting tables on proxies (acc) or db1 (acc acc_backup acc_trash)
@@ -28,6 +34,7 @@ DBHOST="localhost"
 
 # command shortcut
 MYSQL="mysql -u${DBUSER} -p${DBPASS} -h${DBHOST} --skip-column-names"
+MYSQLDUMP="mysqldump -u${DBUSER} -p${DBPASS} -h${DBHOST} --opt"
 
 delete_loop() {
 	DB=$1
@@ -43,6 +50,7 @@ delete_loop() {
 				AND $COL < DATE_ADD('$MSTART', INTERVAL 1 MONTH) LIMIT 1000;
 				SELECT ROW_COUNT()"
 		)
+		test $? = 0 || break
 
 		test "$RC" = 0 && break
 
@@ -53,29 +61,59 @@ delete_loop() {
 	done
 }
 
+archive_dump() {
+	TABLES=$1
+	DB=$2
+
+	for TABLE in $TABLES; do
+		MONTH=$ARCHIVE_MONTHS
+		while :; do
+			MTABLE="${TABLE}_$(date +%Y%m -d "$MONTH months ago")"
+			STATUS=$($MYSQL $DB -e "SHOW TABLE STATUS LIKE '$MTABLE'")
+			test -z "$STATUS" && break
+			MONTH=$(($MONTH + 1))
+			TARGET=$ARCHIVE_DIR/$MTABLE.$(date +%Y%m%d%H%M%S).sql
+			if ! $MYSQLDUMP $DB $MTABLE > $TARGET; then
+				echo "MySQL DUMP of table $MTABLE into file $TARGET failed" 1>&2
+				continue
+			fi
+			if ! nice gzip -9 $TARGET; then
+				echo "Gzipping of dump file $TARGET failed" 1>&2
+				rm -f "$TARGET" "$TARGET".gz
+				continue
+			fi
+			$MYSQL $DB -e "DROP TABLE $MTABLE"
+		done
+	done
+}
+
+backup_table() {
+	TABLES=$1
+	DB=$2
+	COL=$3
+
+	for CMONTH in `seq 0 $((MONTHS_BACK-1))`; do 
+		TMONTHS=$((CMONTH+MONTHS))
+		TSTAMPL=$(date +%Y-%m -d "${TMONTHS} months ago")
+		TSTAMP=$(date +%Y%m -d "${TMONTHS} months ago")
+		MSTART="$TSTAMPL-01 00:00:00"
+
+		for TABLE in $TABLES; do
+			MTABLE="${TABLE}_${TSTAMP}"
+
+			$MYSQL $DB -e "CREATE TABLE IF NOT EXISTS $MTABLE LIKE $TABLE"
+
+			delete_loop $DB $TABLE $MTABLE $COL $MSTART
+		done
+	done
+}
+
 ########################################################################
 
 PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin"
-for CMONTH in `seq 0 $((MONTHS_BACK-1))`; do 
 
-	TMONTHS=$((CMONTH+MONTHS))
-	TSTAMPL=$(date +%Y-%m -d "${TMONTHS} months ago")
-	TSTAMP=$(date +%Y%m -d "${TMONTHS} months ago")
-	MSTART="$TSTAMPL-01 00:00:00"
+backup_table "$ACC_TABLES" $ACC_DB time
+backup_table "$CDR_TABLES" $CDR_DB start_time
 
-	for TABLE in ${ACC_TABLES}; do
-		MTABLE="${TABLE}_${TSTAMP}"
-
-		$MYSQL $ACC_DB -e "CREATE TABLE IF NOT EXISTS $MTABLE LIKE $TABLE"
-
-		delete_loop $ACC_DB $TABLE $MTABLE time $MSTART
-	done
-
-	for TABLE in ${CDR_TABLES}; do
-		MTABLE="${TABLE}_${TSTAMP}"
-
-		$MYSQL $CDR_DB -e "CREATE TABLE IF NOT EXISTS $MTABLE LIKE $TABLE"
-
-		delete_loop $CDR_DB $TABLE $MTABLE start_time $MSTART
-	done
-done
+archive_dump "$ACC_TABLES" $ACC_DB
+archive_dump "$CDR_TABLES" $CDR_DB
