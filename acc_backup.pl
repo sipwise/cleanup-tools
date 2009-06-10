@@ -29,6 +29,9 @@ my $CDR_DB = "accounting";
 # cdr tables on proxies (empty) or db1 (cdr)
 my @CDR_TABLES = qw(cdr);
 
+# how many entries to move and delete at the same time
+my $BATCH = 1000;
+
 # DB access credentials
 my $DBUSER = "root";
 my $DBPASS = "1freibier!";
@@ -42,7 +45,7 @@ sub delete_loop {
 	while (1) {
 		my $res = $dbh->selectcol_arrayref("select id from $table
 				where $col >= ?
-				and $col < date_add(?, interval 1 month) limit 1000",
+				and $col < date_add(?, interval 1 month) limit $BATCH",
 				undef, $mstart, $mstart);
 
 		$res or last;
