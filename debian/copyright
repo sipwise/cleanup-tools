@@ -1,10 +1,7 @@
-This package was debianized by Michael Prokop <mprokop@sipwise.com> on
-Tue, 13 Oct 2009 23:46:31 +0200.
-
-It was downloaded from https://dev.sipwise.com/svn
-
 Upstream Author: The Sipwise Team - http://sipwise.com/
-
-Copyright:
-
-    Copyright (C) 2009++ Sipwise / http://sipwise.com/
+Copyright:       Copyright (c) 2007-2009 Sipwise GmbH, Austria
+License:         All software included in this package is
+                 Copyright (c) Sipwise GmbH, Austria.
+                 All rights reserved. You may not copy, distribute
+                 or modify without prior written permission from
+                 Sipwise GmbH, Austria.
