@@ -29,9 +29,9 @@ install: build
 	dh_clean -k
 	dh_installdirs usr/bin
 
-	# Add here commands to install the package into debian/cleanup-tools.
-	install -m 755 acc_backup.pl   debian/cleanup-tools/usr/bin/acc_backup.pl
-	install -m 755 binlog-purge.pl debian/cleanup-tools/usr/bin/binlog-purge.pl
+	# Add here commands to install the package into debian/sipwise-cleanup-tools.
+	install -m 755 acc_backup.pl   debian/sipwise-cleanup-tools/usr/bin/acc_backup.pl
+	install -m 755 binlog-purge.pl debian/sipwise-cleanup-tools/usr/bin/binlog-purge.pl
 
 # Build architecture-dependent files here.
 binary-arch: install

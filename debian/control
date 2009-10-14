@@ -1,4 +1,4 @@
-Source: cleanup-tools
+Source: sipwise-cleanup-tools
 Section: utils
 Priority: extra
 Maintainer: Michael Prokop <mprokop@sipwise.com>
@@ -8,8 +8,8 @@ Homepage: http://sipwise.com/
 Vcs-svn: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 
-Package: cleanup-tools
-Architecture: any
+Package: sipwise-cleanup-tools
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
 Description: TODO
  TODO
