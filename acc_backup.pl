@@ -30,7 +30,6 @@ while (<CONFIG>) {
     my ($var, $value) = split(/\s*=\s*/, $_, 2);
 	no strict 'refs';
 	$$var = $value;
-	print "El valor de $var es $value - $$var\n"
 } 
 close CONFIG;
 
