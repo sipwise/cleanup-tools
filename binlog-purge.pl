@@ -29,8 +29,8 @@ close CONFIG;
 
 
 my (undef, $me)		= uname();
-my @creds		= 'dbi:mysql:'.",".$DBUSER.",".$DBPASS;
-my @remotecreds		= 'dbi:mysql:'.",".$DBREMOTEUSER.",".$DBREMOTEPASS;
+my @creds = ('dbi:mysql:', $DBUSER, $DBPASS);
+my @remotecreds = ('dbi:mysql:', $DBREMOTEUSER, $DBREMOTEPASS);
 
 
 my $dbh = DBI->connect(@creds) or die;
