@@ -29,6 +29,16 @@ close CONFIG;
 
 
 my (undef, $me)		= uname();
+#This $me variable is used for matching the logfile name. It is valid for sip:carrier but not for sip:provider
+# hack needed here
+if ($me eq "sp1") {
+        $me = "db1";
+}
+elsif ($me eq "sp2") {
+        $me = "db2";
+}
+ 
+
 my @creds = ('dbi:mysql:', $DBUSER, $DBPASS);
 my @remotecreds = ('dbi:mysql:', $DBREMOTEUSER, $DBREMOTEPASS);
 
