@@ -33,7 +33,8 @@ while (<CONFIG>) {
 } 
 close CONFIG;
 
-
+my @ACC_TABLE_ARR = split(",",$ACC_TABLES);
+my @CDR_TABLE_ARR = split(",",$CDR_TABLES);
 
 ########################################################################
 
@@ -119,8 +120,8 @@ sub backup_table {
 
 
 
-backup_table($ACC_TABLES, $ACC_DB, "time") or die();
-backup_table($CDR_TABLES, $CDR_DB, "start_time") or die();
+backup_table(\@ACC_TABLE_ARR, $ACC_DB, "time") or die();
+backup_table(\@CDR_TABLE_ARR, $CDR_DB, "start_time") or die();
 
-archive_dump($ACC_TABLES, $ACC_DB);
-archive_dump($CDR_TABLES, $CDR_DB);
+archive_dump(\@ACC_TABLE_ARR, $ACC_DB);
+archive_dump(\@CDR_TABLE_ARR, $CDR_DB);
