@@ -5,9 +5,33 @@ use warnings;
 use POSIX;
 use DBI;
 
+our $DBUSER;
+our $DBPASS;
+our $DBREMOTEUSER;
+our $DBREMOTEPASS;;
+
+
+my $config_file = "/etc/cleanup-tools.conf";
+open CONFIG, "$config_file" or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
+
+no strict 'refs';
+while (<CONFIG>) {
+    chomp;                  # no newline
+    s/#.*//;                # no comments
+    s/^\s+//;               # no leading white
+    s/\s+$//;               # no trailing white
+    next unless length;     # anything left?
+    my ($var, $value) = split(/\s*=\s*/, $_, 2);
+        $$var = $value;
+}
+use strict 'refs';
+close CONFIG;
+
+
 my (undef, $me)		= uname();
-my @creds		= qw(dbi:mysql: root 1freibier!);
-my @remotecreds		= qw(dbi:mysql: replicator wait4Data);
+my @creds		= 'dbi:mysql:'.",".$DBUSER.",".$DBPASS;
+my @remotecreds		= 'dbi:mysql:'.",".$DBREMOTEUSER.",".$DBREMOTEPASS;
+
 
 my $dbh = DBI->connect(@creds) or die;
 

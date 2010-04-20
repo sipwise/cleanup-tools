@@ -4,38 +4,37 @@ use strict;
 use warnings;
 use DBI;
 
-# backing up all data older than $MONTHS months
-# Note: if set for example to 1, this will backup the overall month,
-# not only the records older than 30 days. This logic applies generally,
-# so it will go back $MONTHS months, and starting from there, backing up
-# the full months back to $MONTHS_BACK
-my $MONTHS = 3;
-# from the starting month above, also go back $MONTHS_BACK months and
-# backup them
-my $MONTHS_BACK = 6;
+our $MONTHS;
+our $MONTHS_BACK;
+our $ARCHIVE_MONTHS;
+our $ARCHIVE_DIR;
+our $ACC_DB;
+our $ACC_TABLES;
+our $CDR_DB;
+our $CDR_TABLES;
+our $BATCH;
+our $DBUSER;
+our $DBPASS;
+our $DBHOST;
 
-# archive tables older than $ARCHIVE_MONTHS will be dumped to a file,
-# gzipped and then dropped afterwards
-my $ARCHIVE_MONTHS = 12;
-# drop the dump files into $ARCHIVE_DIR
-my $ARCHIVE_DIR = "/tmp";
 
-# accounting database on proxies (openser) or db1 (accounting)
-my $ACC_DB = "accounting";
-# accounting tables on proxies (acc) or db1 (acc acc_backup acc_trash)
-my @ACC_TABLES = qw(acc acc_backup acc_trash);
-# cdr database (accounting)
-my $CDR_DB = "accounting";
-# cdr tables on proxies (empty) or db1 (cdr)
-my @CDR_TABLES = qw(cdr);
+my $config_file = "/etc/cleanup-tools.conf";
+open CONFIG, "$config_file" or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
 
-# how many entries to move and delete at the same time
-my $BATCH = 1000;
+while (<CONFIG>) {
+    chomp;                  # no newline
+    s/#.*//;                # no comments
+    s/^\s+//;               # no leading white
+    s/\s+$//;               # no trailing white
+    next unless length;     # anything left?
+    my ($var, $value) = split(/\s*=\s*/, $_, 2);
+	no strict 'refs';
+	$$var = $value;
+	print "El valor de $var es $value - $$var\n"
+} 
+close CONFIG;
 
-# DB access credentials
-my $DBUSER = "root";
-my $DBPASS = "1freibier!";
-my $DBHOST = "localhost";
+
 
 ########################################################################
 
@@ -119,8 +118,10 @@ sub backup_table {
 
 ########################################################################
 
-backup_table(\@ACC_TABLES, $ACC_DB, "time") or die();
-backup_table(\@CDR_TABLES, $CDR_DB, "start_time") or die();
 
-archive_dump(\@ACC_TABLES, $ACC_DB);
-archive_dump(\@CDR_TABLES, $CDR_DB);
+
+backup_table($ACC_TABLES, $ACC_DB, "time") or die();
+backup_table($CDR_TABLES, $CDR_DB, "start_time") or die();
+
+archive_dump($ACC_TABLES, $ACC_DB);
+archive_dump($CDR_TABLES, $CDR_DB);

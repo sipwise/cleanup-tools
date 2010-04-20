@@ -1,3 +1,11 @@
+sipwise-cleanup-tools (0.2-1) unstable; urgency=low
+
+  * Config file support added
+  * Cronjob file added for daily invocation
+  * Changed install path to /usr/sbin for the scripts
+
+ -- Jon Bonilla <jbonilla@sipwise.com>  Tue, 13 Oct 2009 23:46:31 +0200
+
 sipwise-cleanup-tools (0.1) unstable; urgency=low
 
   * Initial release.

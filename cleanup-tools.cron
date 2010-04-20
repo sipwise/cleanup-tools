@@ -1,0 +1,2 @@
+00 03 * * *	root	/usr/sbin/acc_backup.pl > /dev/null 2>&1
+05 03 * * *	root	/usr/sbin/binlog-purge.pl > /dev/null 2>&1

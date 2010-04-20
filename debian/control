@@ -11,5 +11,5 @@ Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 Package: sipwise-cleanup-tools
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
-Description: TODO
- TODO
+Description: Database entry and binlog cleanup
+ Erase and dump databse entries and mysql binlogs
