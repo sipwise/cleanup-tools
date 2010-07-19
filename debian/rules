@@ -30,7 +30,7 @@ install: build
 	dh_installdirs usr/sbin
 
 	mkdir -p $(CURDIR)/debian/sipwise-cleanup-tools/etc
-        mkdir -p $(CURDIR)/debian/sipwise-cleanup-tools/etc/cron.d
+	mkdir -p $(CURDIR)/debian/sipwise-cleanup-tools/etc/cron.d
 	# Add here commands to install the package into debian/sipwise-cleanup-tools.
 	install -m 755 acc_backup.pl   debian/sipwise-cleanup-tools/usr/sbin/acc_backup.pl
 	install -m 755 binlog-purge.pl debian/sipwise-cleanup-tools/usr/sbin/binlog-purge.pl
