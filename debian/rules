@@ -29,12 +29,13 @@ install: build
 	dh_clean -k
 	dh_installdirs usr/sbin
 
-	mkdir -p $(CURDIR)/debian/ngcp-cleanup-tools/etc
+	mkdir -p $(CURDIR)/debian/ngcp-cleanup-tools/etc/ngcp-cleanup-tools/
 	mkdir -p $(CURDIR)/debian/ngcp-cleanup-tools/etc/cron.d
 	# Add here commands to install the package into debian/ngcp-cleanup-tools.
 	install -m 755 acc_backup.pl   debian/ngcp-cleanup-tools/usr/sbin/acc_backup.pl
 	install -m 755 binlog-purge.pl debian/ngcp-cleanup-tools/usr/sbin/binlog-purge.pl
-	install -m 644 cleanup-tools.conf debian/ngcp-cleanup-tools/etc/cleanup-tools.conf
+	install -m 644 cleanup-tools.conf debian/ngcp-cleanup-tools/etc/ngcp-cleanup-tools/acc_backup.conf
+	install -m 644 cleanup-tools.conf debian/ngcp-cleanup-tools/etc/ngcp-cleanup-tools/binlog_purge.conf
 	install -m 644 cleanup-tools.cron debian/ngcp-cleanup-tools/etc/cron.d/cleanup-tools
 
 # Build architecture-dependent files here.

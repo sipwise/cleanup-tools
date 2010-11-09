@@ -11,7 +11,7 @@ our $DBREMOTEUSER;
 our $DBREMOTEPASS;;
 
 
-my $config_file = "/etc/binlog-purge.conf";
+my $config_file = "/etc/ngcp-cleanup-tools/binlog-purge.conf";
 open CONFIG, "$config_file" or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
 
 no strict 'refs';
