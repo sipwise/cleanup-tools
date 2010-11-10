@@ -112,6 +112,14 @@ sub cleanup {
 
 my %cmds;
 
+$cmds{unset} = sub {
+	my ($var) = @_;
+
+	$var or die("Syntax error in unset command");
+
+	delete($vars{$var});
+};
+
 $cmds{connect} = sub {
 	my ($db) = @_;
 
