@@ -4,8 +4,7 @@ use strict;
 use warnings;
 use DBI;
 
-#my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
-my $config_file = "acc-cleanup.conf";
+my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
 open(CONFIG, "<", $config_file) or die("Program stopping, couldn't open the configuration file '$config_file'.\n");
 
 ########################################################################
