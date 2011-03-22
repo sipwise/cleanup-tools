@@ -4,6 +4,12 @@ use strict;
 use warnings;
 use POSIX;
 use DBI;
+use Sys::Syslog;
+
+openlog("acc-cleanup", "ndelay,pid", "daemon");
+$SIG{__WARN__} = $SIG{__DIE__} = sub {
+	syslog('warning', "@_");
+};
 
 our $DBUSER;
 our $DBPASS;

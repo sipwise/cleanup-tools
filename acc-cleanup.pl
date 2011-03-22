@@ -3,6 +3,12 @@
 use strict;
 use warnings;
 use DBI;
+use Sys::Syslog;
+
+openlog("acc-cleanup", "ndelay,pid", "daemon");
+$SIG{__WARN__} = $SIG{__DIE__} = sub {
+	syslog('warning', "@_");
+};
 
 my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
 open(CONFIG, "<", $config_file) or die("Program stopping, couldn't open the configuration file '$config_file'.\n");
