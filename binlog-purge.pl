@@ -6,7 +6,7 @@ use POSIX;
 use DBI;
 use Sys::Syslog;
 
-openlog("acc-cleanup", "ndelay,pid", "daemon");
+openlog("binglog-purge", "ndelay,pid", "daemon");
 $SIG{__WARN__} = $SIG{__DIE__} = sub {
 	syslog('warning', "@_");
 };
