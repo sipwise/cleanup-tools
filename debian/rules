@@ -13,30 +13,22 @@ build: build-stamp
 
 build-stamp:
 	dh_testdir
-
+	mkdir -p ce pro
+	tpage --define PRO=true cleanup-tools.cron > pro/cleanup-tools
+	tpage                   cleanup-tools.cron > ce/cleanup-tools
 	touch $@
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp
-
+	rm -rf build-stamp ce pro
 	dh_clean
 
 install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-	dh_installdirs usr/sbin
-
-	mkdir -p $(CURDIR)/debian/ngcp-cleanup-tools/etc/ngcp-cleanup-tools/
-	mkdir -p $(CURDIR)/debian/ngcp-cleanup-tools/etc/cron.d
-	# Add here commands to install the package into debian/ngcp-cleanup-tools.
-	install -m 755 acc-cleanup.pl   debian/ngcp-cleanup-tools/usr/sbin/acc-cleanup.pl
-	#install -m 755 binlog-purge.pl debian/ngcp-cleanup-tools/usr/sbin/binlog-purge.pl
-	install -m 644 acc-cleanup.conf debian/ngcp-cleanup-tools/etc/ngcp-cleanup-tools/acc-cleanup.conf
-	#install -m 644 binlog-purge.conf debian/ngcp-cleanup-tools/etc/ngcp-cleanup-tools/binlog-purge.conf
-	install -m 644 cleanup-tools.cron debian/ngcp-cleanup-tools/etc/cron.d/cleanup-tools
+	dh_installdirs
 
 # Build architecture-dependent files here.
 binary-arch: install
@@ -50,6 +42,7 @@ binary-indep: install
 	dh_installdocs
 	dh_installexamples
 	dh_installman
+	dh_install
 	dh_link
 	dh_strip
 	dh_compress

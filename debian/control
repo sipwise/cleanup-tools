@@ -1,15 +1,27 @@
 Source: ngcp-cleanup-tools
 Section: utils
 Priority: extra
-Maintainer: Michael Prokop <mprokop@sipwise.com>
+Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: debhelper (>= 5)
-Standards-Version: 3.8.3
+Standards-Version: 3.9.2
 Homepage: http://sipwise.com/
 Vcs-svn: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 
-Package: ngcp-cleanup-tools
+Package: ngcp-cleanup-tools-ce
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
+Conflicts: ngcp-cleanup-tools-pro, ngcp-cleanup-tools (<= 0.2.1)
+Provides: ngcp-cleanup-tools
+Replaces: ngcp-cleanup-tools
 Description: Database entry and binlog cleanup
- Erase and dump databse entries and mysql binlogs
+ Erase and dump database entries and mysql binlogs.
+
+Package: ngcp-cleanup-tools-pro
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
+Conflicts: ngcp-cleanup-tools-ce, ngcp-cleanup-tools (<= 0.2.1)
+Provides: ngcp-cleanup-tools
+Replaces: ngcp-cleanup-tools
+Description: Database entry and binlog cleanup
+ Erase and dump database entries and mysql binlogs.
