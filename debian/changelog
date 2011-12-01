@@ -1,3 +1,9 @@
+ngcp-cleanup-tools (0.3.0) unstable; urgency=low
+
+  * Use different cron files for CE and PRO
+
+ -- Jon Bonilla <jbonilla@sipwise.com>  Tue, 01 Dec 2011 23:46:31 +0200
+
 ngcp-cleanup-tools (0.2.1) unstable; urgency=low
 
   * Use syslog for logging
