@@ -106,7 +106,7 @@ sub cleanup {
 	my $col = $vars{"time-column"};
 
 	while (1) {
-		my $aff = $dbh->do("delete from $table where $col < date_sub(now(), interval ? day) $limit",
+		my $aff = $dbh->do("delete from $table where $col < date(date_sub(now(), interval ? day)) $limit",
 			undef, $vars{"cleanup-days"});
 		$aff or die("Unable to delete records from $table");
 		$aff == 0 and last;
