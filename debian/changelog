@@ -1,3 +1,9 @@
+ngcp-cleanup-tools (0.3.1) unstable; urgency=low
+
+  * Fix the bug with infinite loop in cleanup. 
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Mon, 04 Jun 2012 15:37:15 +0200
+
 ngcp-cleanup-tools (0.3.0) unstable; urgency=low
 
   * Use different cron files for CE and PRO
