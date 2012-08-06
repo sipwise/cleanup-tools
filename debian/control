@@ -10,8 +10,8 @@ Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 
 Package: ngcp-cleanup-tools-ce
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
-Conflicts: ngcp-cleanup-tools-pro, ngcp-cleanup-tools (<= 0.2.1)
+Depends: ${misc:Depends}, ${perl:Depends}, ${shlibs:Depends}
+Conflicts: ngcp-cleanup-tools (<= 0.2.1), ngcp-cleanup-tools-pro
 Provides: ngcp-cleanup-tools
 Replaces: ngcp-cleanup-tools
 Description: Database entry and binlog cleanup
@@ -19,8 +19,8 @@ Description: Database entry and binlog cleanup
 
 Package: ngcp-cleanup-tools-pro
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}
-Conflicts: ngcp-cleanup-tools-ce, ngcp-cleanup-tools (<= 0.2.1)
+Depends: ${misc:Depends}, ${perl:Depends}, ${shlibs:Depends}
+Conflicts: ngcp-cleanup-tools (<= 0.2.1), ngcp-cleanup-tools-ce
 Provides: ngcp-cleanup-tools
 Replaces: ngcp-cleanup-tools
 Description: Database entry and binlog cleanup
