@@ -28,7 +28,7 @@ install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-	dh_installdirs
+	dh_installdirs var/backup/cdr/
 
 # Build architecture-dependent files here.
 binary-arch: install
@@ -45,6 +45,7 @@ binary-indep: install
 	dh_install
 	dh_link
 	dh_strip
+	dh_lintian
 	dh_compress
 	dh_fixperms
 	dh_perl
