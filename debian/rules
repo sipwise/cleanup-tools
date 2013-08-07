@@ -9,6 +9,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+b=$(CURDIR)/debian/build
+
 build: build-stamp
 
 build-stamp:
@@ -21,7 +23,7 @@ build-stamp:
 clean:
 	dh_testdir
 	dh_testroot
-	rm -rf build-stamp ce pro
+	rm -rf $(b) build-stamp ce pro
 	dh_clean
 
 install: build
@@ -30,30 +32,32 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-# Build architecture-dependent files here.
-binary-arch: install
-# We have nothing to do by default.
+%:
+	@echo "--- Building: $@"
+	dh_installdirs       -p$@ -P$(b)/$@
+	dh_link              -p$@ -P$(b)/$@
+	dh_installdocs       -p$@ -P$(b)/$@
+	dh_installchangelogs -p$@ -P$(b)/$@
+	dh_installexamples   -p$@ -P$(b)/$@
+	dh_installman        -p$@ -P$(b)/$@
+	dh_install           -p$@ -P$(b)/$@
+	dh_strip             -p$@ -P$(b)/$@
+	dh_lintian           -p$@ -P$(b)/$@
+	dh_compress          -p$@ -P$(b)/$@
+	dh_fixperms          -p$@ -P$(b)/$@
+	dh_perl              -p$@ -P$(b)/$@ -V
+	dh_makeshlibs        -p$@ -P$(b)/$@ -V
+	dh_installdeb        -p$@ -P$(b)/$@
+	dh_shlibdeps         -p$@ -P$(b)/$@
+	dh_installdebconf    -p$@ -P$(b)/$@
+	dh_gencontrol        -p$@ -P$(b)/$@
+	dh_md5sums           -p$@ -P$(b)/$@
+	dh_builddeb          -p$@ -P$(b)/$@
 
-# Build architecture-independent files here.
-binary-indep: install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs
-	dh_installdocs
-	dh_installexamples
-	dh_installman
-	dh_install
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_perl
-#	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+binary-all: build install
+
+binary-indep: build install \
+        ngcp-cleanup-tools-ce ngcp-cleanup-tools-pro
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install
