@@ -1,3 +1,11 @@
+ngcp-cleanup-tools (0.5.1) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Ship /var/backups/cdr with ngcp-cleanup-tools package
+  * Install var/backup/cdr/ via *.dirs, rework debian/rules to support '%:' target
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 07 Aug 2013 14:28:16 +0200
+
 ngcp-cleanup-tools (0.5.0) unstable; urgency=low
 
   * First version for 2.7 release.
