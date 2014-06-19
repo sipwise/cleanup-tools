@@ -1,3 +1,9 @@
+ngcp-cleanup-tools (0.6.2.0+0~mr3.3.2.0) unstable; urgency=low
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Jun 2014 07:10:11 +0200
+
 ngcp-cleanup-tools (0.6.1.0+0~mr3.3.1.0) unstable; urgency=low
 
   [ Michael Prokop ]
