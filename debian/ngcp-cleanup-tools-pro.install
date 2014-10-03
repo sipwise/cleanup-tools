@@ -1,4 +1,5 @@
 acc-cleanup.conf etc/ngcp-cleanup-tools/
 acc-cleanup.pl   usr/sbin/
 moh-cleanup      usr/sbin/
+elasticsearch-remove-old-indices.sh usr/sbin/
 pro/cleanup-tools etc/cron.d/
