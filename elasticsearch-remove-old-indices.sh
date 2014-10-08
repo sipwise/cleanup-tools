@@ -53,6 +53,12 @@ EOF
 ELASTICSEARCH="http://localhost:9200"
 KEEP=14
 GREP="logstash"
+DEFAULTS="/etc/default/ngcp-elasticsearch-cleanup"
+
+# Load startup options if available
+if [ -f $DEFAULTS ]; then
+   . $DEFAULTS || true
+fi
 
 # Validate numeric values
 RE_D="^[0-9]+$"
