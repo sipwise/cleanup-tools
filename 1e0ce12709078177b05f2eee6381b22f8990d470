@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_fea25999",
+        "filename": "elasticsearch-remove-old-indices.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-10-08T13:50:03Z",
+      "side": 1,
+      "message": "This should go to stderr, I\u0027m aware that this is upstream\u0027s fault but let\u0027s not let that show up in our platform as is :)",
+      "revId": "1e0ce12709078177b05f2eee6381b22f8990d470",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_de9f954f",
+        "filename": "elasticsearch-remove-old-indices.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-10-08T13:50:03Z",
+      "side": 1,
+      "message": "Same here WRT stderr",
+      "revId": "1e0ce12709078177b05f2eee6381b22f8990d470",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
