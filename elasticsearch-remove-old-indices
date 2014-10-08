@@ -53,6 +53,15 @@ EOF
 ELASTICSEARCH="http://localhost:9200"
 KEEP=14
 GREP="logstash"
+DEFAULTS="/etc/default/ngcp-elasticsearch-cleanup"
+
+# Load startup options if available
+if [ -f $DEFAULTS ]; then
+  . $DEFAULTS
+else
+  echo "Missing default configuration file ${DEFAULTS}, exiting." >&2
+  exit 1
+fi
 
 # Validate numeric values
 RE_D="^[0-9]+$"
@@ -89,7 +98,7 @@ done
 
 # If we have errors, show the errors with usage data and exit.
 if [ -n "$ERROR" ]; then
-  echo -e $ERROR
+  echo -e $ERROR >&2
   usage
   exit 1
 fi
@@ -98,7 +107,7 @@ fi
 INDICES_TEXT=`curl -s "$ELASTICSEARCH/_status?pretty=true" | grep $GREP | grep -v \"index\" | sort -r | awk -F\" {'print $2'}`
 
 if [ -z "$INDICES_TEXT" ]; then
-  echo "No indices returned containing '$GREP' from $ELASTICSEARCH."
+  echo "No indices returned containing '$GREP' from $ELASTICSEARCH." >&2
   exit 1
 fi
 
