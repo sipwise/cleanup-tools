@@ -1,3 +1,14 @@
+ngcp-cleanup-tools (0.8.1.0+0~mr3.5.1.0) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [28c0f7c] MT#7505 Add .gitreview file for cleanup-tools
+  * [7446bb1] MT#9407 Add script elasticsearch-remove-old-indices
+  * [3057a74] MT#9407 Add defaults support to elasticsearch-remove-old-indices
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 09 Oct 2014 16:23:47 +0200
+
 ngcp-cleanup-tools (0.8.0.0+0~mr3.5.0.0) unstable; urgency=low
 
   * New release.
