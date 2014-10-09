@@ -16,6 +16,24 @@
       "revId": "853e3d20365fc2bfde7b1dc999e97cb1e73b54e9",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_9e7d9db4",
+        "filename": "elasticsearch-remove-old-indices",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-10-09T09:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba092121_7ebc096d",
+      "revId": "853e3d20365fc2bfde7b1dc999e97cb1e73b54e9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
