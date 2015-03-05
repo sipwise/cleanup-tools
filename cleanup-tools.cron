@@ -1,6 +1,8 @@
-[% IF PRO %]00 03 * * *   root  if /usr/sbin/ngcp-check_active -q; then /usr/sbin/acc-cleanup.pl >/dev/null 2>&1 ; fi
-05 04 * * *   root    /usr/sbin/moh-cleanup > /dev/null 2>&1
+[%- IF PRO -%]
+00 03 * * *   root  if /usr/sbin/ngcp-check_active -q; then /usr/sbin/acc-cleanup.pl >/dev/null 2>&1 ; fi
+05 04 * * *   root  /usr/sbin/moh-cleanup > /dev/null 2>&1
+[%- ELSE -%]
+00 03 * * *   root  /usr/sbin/acc-cleanup.pl > /dev/null 2>&1
+[% END -%]
 #05 03 * * *   root    /usr/sbin/binlog-purge.pl > /dev/null 2>&1
-[% ELSE %]00 03 * * *   root  /usr/sbin/acc-cleanup.pl > /dev/null 2>&1
-#05 03 * * *   root    /usr/sbin/binlog-purge.pl > /dev/null 2>&1 
-[% END %]
+*/59 * * * *   root  find /var/spool/asterisk/voicemail/default/ -maxdepth 1 -mmin +59 -type d ! -name default -exec rm -rf '{}' \;
