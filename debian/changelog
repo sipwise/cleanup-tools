@@ -1,3 +1,15 @@
+ngcp-cleanup-tools (0.11.1.0+0~mr3.8.1.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [f2119c8] MT#9127 Bump Standards-Version to 3.9.6
+
+  [ Alexander Lutay ]
+  * [f38a016] MT#11015 Add asterisk voicemail folder cleanup/workaround
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 18 Mar 2015 13:46:09 +0100
+
 ngcp-cleanup-tools (0.11.0.0+0~mr3.8.0.0) unstable; urgency=low
 
   * New release.
