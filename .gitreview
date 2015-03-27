@@ -1,4 +1,4 @@
 [gerrit]
 host=gerrit.mgm.sipwise.com
 port=29418
-project=cleanup-tools.git
+project=cleanup-tools
