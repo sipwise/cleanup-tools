@@ -5,4 +5,4 @@
 00 03 * * *   root  /usr/sbin/acc-cleanup.pl > /dev/null 2>&1
 [% END -%]
 #05 03 * * *   root    /usr/sbin/binlog-purge.pl > /dev/null 2>&1
-*/59 * * * *   root  find /var/spool/asterisk/voicemail/default/ -maxdepth 1 -mmin +59 -type d ! -name default -exec rm -rf '{}' \;
+*/59 * * * *   root  [ -d /var/spool/asterisk/voicemail/default/ ] && find /var/spool/asterisk/voicemail/default/ -maxdepth 1 -mmin +59 -type d ! -name default -exec rm -rf '{}' \; || true
