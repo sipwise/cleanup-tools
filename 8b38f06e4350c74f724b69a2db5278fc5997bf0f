@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_40837fcc",
+        "filename": "cleanup-tools.cron",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-01-26T10:44:59Z",
+      "side": 1,
+      "message": "Kirill just asking, is the pass still valid in mr4.3/new asterisk?",
+      "revId": "8b38f06e4350c74f724b69a2db5278fc5997bf0f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
