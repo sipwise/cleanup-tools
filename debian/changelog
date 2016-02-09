@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (0.13.2.1+0~mr4.1.2.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [fd5127e] MT#17523 cleanup-tools.cron: avoid error if default voicemail dir not there yet
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 09 Feb 2016 11:42:36 +0100
+
 ngcp-cleanup-tools (0.13.2.0+0~mr4.1.2.0) unstable; urgency=medium
 
   * New release.
