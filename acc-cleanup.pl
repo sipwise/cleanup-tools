@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use DBI;
 use Sys::Syslog;
+use Date::Parse;
+use POSIX qw(strftime);
 
 openlog("acc-cleanup", "ndelay,pid", "daemon");
 $SIG{__WARN__} = $SIG{__DIE__} = sub {
@@ -105,9 +107,18 @@ sub cleanup {
 	$vars{batch} && $vars{batch} > 0 and $limit = " limit $vars{batch}";
 	my $col = $vars{"time-column"};
 
+	my $days = sprintf "date(date_sub(now(), interval %d day))",
+				$vars{"cleanup-days"};
+	# performance workaround for unixtime columns
+	if ($col =~ /from_unixtime\(\s*(\w+)\s*\)/i) {
+		die "Cannot parse time-column $col" unless $1;
+		$col = $1;
+		my $days_t = time() - 86400 * $vars{"cleanup-days"};
+		$days = str2time(strftime('%Y-%m-%d 00:00:00', localtime($days_t)));
+	}
+
 	while (1) {
-		my $aff = $dbh->do("delete from $table where $col < date(date_sub(now(), interval ? day)) $limit",
-			undef, $vars{"cleanup-days"});
+		my $aff = $dbh->do("delete from $table where $col < $days $limit");
 		$aff or die("Unable to delete records from $table");
 		$aff == 0 and last;
 	}
