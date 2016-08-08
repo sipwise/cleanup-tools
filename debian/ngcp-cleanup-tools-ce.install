@@ -1,3 +1,4 @@
 acc-cleanup.conf etc/ngcp-cleanup-tools/
 acc-cleanup.pl   usr/sbin/
+cleanup-old-cdr-files.pl   usr/sbin/
 ce/cleanup-tools etc/cron.d/
