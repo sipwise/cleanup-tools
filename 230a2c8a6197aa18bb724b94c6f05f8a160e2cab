@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Víctor Seva <vseva@sipwise.com>
+Submitted-by: Richard Fuchs <rfuchs@sipwise.com>
+Submitted-at: Tue, 09 Aug 2016 17:51:03 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/7589
+Project: cleanup-tools
+Branch: refs/heads/mr3.8
