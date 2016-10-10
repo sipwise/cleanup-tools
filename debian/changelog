@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (0.17.3.0+0~mr4.5.3.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [6f4a459] MT#20499 add cleanup script for old cdr files
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Oct 2016 16:09:21 +0200
+
 ngcp-cleanup-tools (0.17.2.0+0~mr4.5.2.0) unstable; urgency=medium
 
   * New release.
