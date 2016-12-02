@@ -11,6 +11,7 @@ $SIG{__WARN__} = $SIG{__DIE__} = sub {
 };
 
 my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
+#$config_file = "/home/rkrenn/test/acc-cleanup.conf";
 open(CONFIG, "<", $config_file) or die("Program stopping, couldn't open the configuration file '$config_file'.\n");
 
 ########################################################################
@@ -23,20 +24,39 @@ sub delete_loop {
 	my $limit = '';
 	$vars{batch} && $vars{batch} > 0 and $limit = " limit $vars{batch}";
 
+	my $sth = $dbh->prepare("show fields from $table");
+	$sth->execute;
+	my $fieldinfo = $sth->fetchall_hashref('Field');
+	$sth->finish;
+	my @keycols = ();
+	foreach my $fieldname (keys %$fieldinfo) {
+		if (uc($fieldinfo->{$fieldname}->{'Key'}) eq 'PRI') {
+			push @keycols,$fieldname;
+		}
+	}
+
+	die("No primary key columns for table $table") unless @keycols;
+
+	my $primary_key_cols = join(",",@keycols);
+
+	#$mstart = '2016-12-01 00:00:00';
+
 	while (1) {
-		my $res = $dbh->selectcol_arrayref("select id from $table
-				where $col >= ?
-				and $col < date_add(?, interval 1 month) $limit",
-				undef, $mstart, $mstart);
-
-		$res or last;
-		@$res or last;
-
-		my $idlist = join(",", @$res);
-		$dbh->do("insert into $mtable select * from $table where id in ($idlist)")
-			or die("Failed to insert into monthly table $mtable");
-		$dbh->do("delete from $table where id in ($idlist)")
-			or die("Failed to delete records out of $table");
+		my $temp_table = $table . "_tmp";
+		my $size = $dbh->do("create temporary table $temp_table as ".
+		        "(select $primary_key_cols from $table " .
+				"where $col >= ? and $col < date_add(?, interval 1 month) $limit)",undef, $mstart, $mstart)
+			or die("Failed to create temporary table $temp_table: " . $DBI::errstr);
+		if ($size > 0) {
+			$dbh->do("insert into $mtable select s.* from ".
+				"$table as s inner join $temp_table as t using ($primary_key_cols)")
+				or die("Failed to insert into monthly table $mtable: " . $DBI::errstr);
+			$dbh->do("delete d.* from $table as d inner join $temp_table as t using ($primary_key_cols)")
+				or die("Failed to delete records out of $table: " . $DBI::errstr);
+		}
+		$dbh->do("drop temporary table $temp_table")
+			or die("Failed to drop temporary table $temp_table: " . $DBI::errstr);
+		last unless $size > 0;
 	}
 }
 
@@ -136,7 +156,7 @@ $cmds{connect} = sub {
 	$vars{host} and $dbi .= ";host=$vars{host}";
 
 	$dbh = DBI->connect($dbi, $vars{username}, $vars{password});
-	$dbh or die("Failed to connect to DB $db");
+	$dbh or die("Failed to connect to DB $db ($vars{host}): " . $DBI::errstr);
 
 	$dbh->{private_db} = $db;
 };
