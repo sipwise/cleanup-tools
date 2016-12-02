@@ -23,20 +23,37 @@ sub delete_loop {
 	my $limit = '';
 	$vars{batch} && $vars{batch} > 0 and $limit = " limit $vars{batch}";
 
+	my $fieldinfo = $dbh->fetchall_hashref("show fields from $table",'Field');
+    my @keycols = ();
+    foreach my $fieldname (keys %$fieldinfo) {
+        if (uc($fieldinfo->{$fieldname}->{'Key'}) eq 'PRI') {
+            push @keycols,$fieldname;
+        }
+    }
+
+	die("No primary key colums for table $table") unless @keycols;
+
+	my $prim_key_cols = join(",",@keycols);
+
+	if ($table =~ /_data$/i) {
+	#todo derive the time column name
+	}
+
 	while (1) {
-		my $res = $dbh->selectcol_arrayref("select id from $table
-				where $col >= ?
-				and $col < date_add(?, interval 1 month) $limit",
-				undef, $mstart, $mstart);
-
-		$res or last;
-		@$res or last;
-
-		my $idlist = join(",", @$res);
-		$dbh->do("insert into $mtable select * from $table where id in ($idlist)")
+		my $temp_table = $table . "_tmp";
+		my $size = $dbh->do("create temporary table $temp_table as ".
+		        "(select $primary_key_cols from $table " .
+				"where $col >= ? and $col < date_add(?, interval 1 month) $limit)",$mstart, $mstart)
+			or die("Failed to create temporary table $temp_table");
+		if ($size > 0) {
+			$dbh->do("insert into $mtable as d select s.* from ".
+				"$table as s inner join $temp_table as t using ($primary_key_cols)")
 			or die("Failed to insert into monthly table $mtable");
-		$dbh->do("delete from $table where id in ($idlist)")
+			$dbh->do("delete d.* from $table as d inner join $temp_table as t using ($primary_key_cols)"
 			or die("Failed to delete records out of $table");
+		}
+		$dbh->do("drop temporary table $temp_table")
+			or die("Failed to drop temporary table $temp_table");
 	}
 }
 
