@@ -15,7 +15,7 @@ open(CONFIG, "<", $config_file) or die("Program stopping, couldn't open the conf
 
 ########################################################################
 
-my (%vars, $dbh);
+my (%vars, %cmds, $dbh);
 
 sub delete_loop {
 	my ($table, $mtable, $col, $mstart) = @_;
@@ -51,6 +51,8 @@ sub archive_dump {
 		my $mtable = $table . "_" . sprintf('%04i%02i', $bt[5] + 1900, $bt[4] + 1);
 		my $res = $dbh->selectcol_arrayref("show table status like ?", undef, $mtable);
 		($res && @$res && $res->[0]) or last;
+		$dbh->disconnect;
+		#print "archiving $mtable\n";
 		$month++;
 		if ($vars{"archive-target"} ne '/dev/null') {
 			my $target = $vars{"archive-target"} . "/$mtable." . sprintf('%04i%02i%02i%02i%02i%02i', $bt[5] + 1900, $bt[4] + 1, @bt[3,2,1,0]) . ".sql";
@@ -75,8 +77,12 @@ sub archive_dump {
 				}
 			}
 		}
+
+		&{$cmds{connect}}($dbh->{private_db});
 		$dbh->do("drop table $mtable");
+
 	}
+
 }
 
 sub backup_table {
@@ -114,8 +120,6 @@ sub cleanup {
 }
 
 ########################################################################
-
-my %cmds;
 
 $cmds{unset} = sub {
 	my ($var) = @_;
