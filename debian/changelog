@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (5.0.1.2+0~mr5.0.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [1f6a8bf] TT#7456 backups for tables with arbitrary primary keys
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 21 Dec 2016 11:44:29 +0100
+
 ngcp-cleanup-tools (5.0.1.1+0~mr5.0.1.1) unstable; urgency=medium
 
   * New release.
