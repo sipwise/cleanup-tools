@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (0.11.9.1+0~mr3.8.9.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [a49ce60] TT#7927 db disconnect-reconnect for "archive" tasks
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Jan 2017 15:27:30 +0100
+
 ngcp-cleanup-tools (0.11.9.0+0~mr3.8.9.0) unstable; urgency=medium
 
   [ Richard Fuchs ]
