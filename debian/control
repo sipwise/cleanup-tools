@@ -2,8 +2,7 @@ Source: ngcp-cleanup-tools
 Section: utils
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: debhelper (>= 5),
-               libtemplate-perl
+Build-Depends: debhelper (>= 5)
 Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
 Vcs-svn: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
