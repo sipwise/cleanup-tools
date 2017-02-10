@@ -2,8 +2,7 @@ Source: ngcp-cleanup-tools
 Section: utils
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: debhelper (>= 5),
-               libtemplate-perl
+Build-Depends: debhelper (>= 5)
 Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
 Vcs-svn: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
@@ -11,7 +10,8 @@ Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 
 Package: ngcp-cleanup-tools-ce
 Architecture: all
-Depends: ${misc:Depends},
+Depends: libredis-perl,
+         ${misc:Depends},
          ${perl:Depends},
 Conflicts: ngcp-cleanup-tools (<= 0.2.1),
            ngcp-cleanup-tools-pro
@@ -22,7 +22,8 @@ Description: Database entry and binlog cleanup
 
 Package: ngcp-cleanup-tools-pro
 Architecture: all
-Depends: ${misc:Depends},
+Depends: libredis-perl,
+         ${misc:Depends},
          ${perl:Depends},
 Conflicts: ngcp-cleanup-tools (<= 0.2.1),
            ngcp-cleanup-tools-ce

@@ -16,8 +16,6 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 	mkdir -p ce pro
-	tpage --define PRO=true cleanup-tools.cron > pro/cleanup-tools
-	tpage                   cleanup-tools.cron > ce/cleanup-tools
 	touch $@
 
 clean:
