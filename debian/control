@@ -2,8 +2,8 @@ Source: ngcp-cleanup-tools
 Section: utils
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: debhelper (>= 5),
-               libtemplate-perl
+Build-Depends:
+ debhelper (>= 9~),
 Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
 Vcs-svn: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
@@ -11,22 +11,37 @@ Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
 
 Package: ngcp-cleanup-tools-ce
 Architecture: all
-Depends: ${misc:Depends},
-         ${perl:Depends},
-Conflicts: ngcp-cleanup-tools (<= 0.2.1),
-           ngcp-cleanup-tools-pro
-Provides: ngcp-cleanup-tools
-Replaces: ngcp-cleanup-tools
+Depends:
+ libconfig-any-perl,
+ libdbi-perl,
+ libsys-syslog-perl,
+ ${misc:Depends},
+ ${perl:Depends},
+Conflicts:
+ ngcp-cleanup-tools (<= 0.2.1),
+ ngcp-cleanup-tools-pro,
+Provides:
+ ngcp-cleanup-tools,
+Replaces:
+ ngcp-cleanup-tools,
 Description: Database entry and binlog cleanup
  Erase and dump database entries and mysql binlogs.
 
 Package: ngcp-cleanup-tools-pro
 Architecture: all
-Depends: ${misc:Depends},
-         ${perl:Depends},
-Conflicts: ngcp-cleanup-tools (<= 0.2.1),
-           ngcp-cleanup-tools-ce
-Provides: ngcp-cleanup-tools
-Replaces: ngcp-cleanup-tools
+Depends:
+ libconfig-any-perl,
+ libdbi-perl,
+ libredis-perl,
+ libsys-syslog-perl,
+ ${misc:Depends},
+ ${perl:Depends},
+Conflicts:
+ ngcp-cleanup-tools (<= 0.2.1),
+ ngcp-cleanup-tools-ce,
+Provides:
+ ngcp-cleanup-tools,
+Replaces:
+ ngcp-cleanup-tools,
 Description: Database entry and binlog cleanup
  Erase and dump database entries and mysql binlogs.
