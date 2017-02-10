@@ -4,3 +4,4 @@ cleanup-old-cdr-files.pl   usr/sbin/
 moh-cleanup      usr/sbin/
 elasticsearch-remove-old-indices usr/sbin/
 pro/cleanup-tools etc/cron.d/
+sems_cleanup.pl usr/sbin/
