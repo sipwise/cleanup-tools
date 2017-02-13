@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_e42437c8",
+        "filename": "sems_cleanup.pl",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-02-13T15:55:55Z",
+      "side": 1,
+      "message": "this depends on libredis-perl ??",
+      "revId": "b8693ee2aeac0853d6497341c084e61c70639100",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}

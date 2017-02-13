@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "da01753e_e40b9729",
+        "filename": "debian/control",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-02-13T15:55:55Z",
+      "side": 0,
+      "message": "we do need libredis-perl here",
+      "revId": "7a11a2accaaab573090b40da3fef2c2a899a49b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_64d32739",
         "filename": "debian/rules",
         "patchSetId": 7
