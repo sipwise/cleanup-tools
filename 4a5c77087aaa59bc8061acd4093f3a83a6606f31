@@ -16,6 +16,24 @@
       "revId": "4a5c77087aaa59bc8061acd4093f3a83a6606f31",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_c001223b",
+        "filename": "debian/postinst",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-27T15:30:41Z",
+      "side": 0,
+      "message": "It is shipped in the binary package, as mentioned in the commit message, created via debian/*.dirs. :)",
+      "parentUuid": "7a1969be_20091696",
+      "revId": "4a5c77087aaa59bc8061acd4093f3a83a6606f31",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
