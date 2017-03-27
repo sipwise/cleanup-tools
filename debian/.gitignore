@@ -1,0 +1,6 @@
+*.log
+*.substvars
+/debhelper-build-stamp
+/files
+/ngcp-cleanup-tools-ce/
+/ngcp-cleanup-tools-pro/

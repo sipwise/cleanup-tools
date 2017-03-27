@@ -4,10 +4,10 @@ Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
  debhelper (>= 9~),
-Standards-Version: 3.9.7
-Homepage: http://sipwise.com/
-Vcs-svn: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
-Vcs-Browser: https://dev.sipwise.com/svn/voip-tools/cleanup-tools
+Standards-Version: 3.9.8
+Homepage: https://www.sipwise.com/
+Vcs-Browser: https://github.com/sipwise/cleanup-tools.git
+Vcs-Git: https://github.com/sipwise/cleanup-tools.git
 
 Package: ngcp-cleanup-tools-ce
 Architecture: all
@@ -24,8 +24,8 @@ Provides:
  ngcp-cleanup-tools,
 Replaces:
  ngcp-cleanup-tools,
-Description: Database entry and binlog cleanup
- Erase and dump database entries and mysql binlogs.
+Description: NGCP provider:CE Database entry and binlog cleanup
+ Erase and dump database entries and MySQL binlogs.
 
 Package: ngcp-cleanup-tools-pro
 Architecture: all
@@ -43,5 +43,5 @@ Provides:
  ngcp-cleanup-tools,
 Replaces:
  ngcp-cleanup-tools,
-Description: Database entry and binlog cleanup
- Erase and dump database entries and mysql binlogs.
+Description: NGCP provider:PRO Database entry and binlog cleanup
+ Erase and dump database entries and MySQL binlogs.
