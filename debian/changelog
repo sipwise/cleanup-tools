@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (5.4.0.0+0~mr5.4.0.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [712d758] TT#5420 Update packaging
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 May 2017 21:31:35 +0200
+
 ngcp-cleanup-tools (5.3.0.0+0~mr5.3.0.0) unstable; urgency=medium
 
   [ Richard Fuchs ]
