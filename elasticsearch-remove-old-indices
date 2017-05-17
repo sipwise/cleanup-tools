@@ -98,13 +98,13 @@ done
 
 # If we have errors, show the errors with usage data and exit.
 if [ -n "$ERROR" ]; then
-  echo -e $ERROR >&2
+  echo -e "$ERROR" >&2
   usage
   exit 1
 fi
 
 # Get the indices from elasticsearch
-INDICES_TEXT=`curl -s "$ELASTICSEARCH/_status?pretty=true" | grep $GREP | grep -v \"index\" | sort -r | awk -F\" {'print $2'}`
+INDICES_TEXT=$(curl -s "$ELASTICSEARCH/_status?pretty=true" | grep "$GREP" | grep -v \"index\" | sort -r | awk -F\" '{print $2}')
 
 if [ -z "$INDICES_TEXT" ]; then
   echo "No indices returned containing '$GREP' from $ELASTICSEARCH." >&2
@@ -112,24 +112,22 @@ if [ -z "$INDICES_TEXT" ]; then
 fi
 
 # If we are logging, make sure we have a logfile TODO - handle errors here
-if [ -n "$LOGFILE" ] && ! [ -e $LOGFILE ]; then
-  touch $LOGFILE
+if [ -n "$LOGFILE" ] && ! [ -e "$LOGFILE" ]; then
+  touch "$LOGFILE"
 fi
 
 # Delete indices
 declare -a INDEX=($INDICES_TEXT)
-if [ ${#INDEX[@]} -gt $KEEP ]; then
-  for index in ${INDEX[@]:$KEEP};do
-    # We don't want to accidentally delete everything
-    if [ -n "$index" ]; then
-      if [ -z "$LOGFILE" ]; then
-        curl -s -XDELETE "$ELASTICSEARCH/$index/" > /dev/null
-      else
-        echo `date "+[%Y-%m-%d %H:%M] "`" Deleting index: $index." >> $LOGFILE
-        curl -s -XDELETE "$ELASTICSEARCH/$index/" >> $LOGFILE
-      fi
+for index in ${INDEX[*]:$KEEP} ; do
+  # We don't want to accidentally delete everything
+  if [ -n "$index" ]; then
+    if [ -z "$LOGFILE" ]; then
+      curl -s -XDELETE "$ELASTICSEARCH/$index/" > /dev/null
+    else
+      echo "$(date "+[%Y-%m-%d %H:%M]") Deleting index: $index." >> "$LOGFILE"
+      curl -s -XDELETE "$ELASTICSEARCH/$index/" >> "$LOGFILE"
     fi
-  done
-fi
+  fi
+done
 
 exit 0
