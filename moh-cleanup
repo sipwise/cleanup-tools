@@ -2,6 +2,4 @@
 
 # removes all music-on-hold cache files older than 24h
 
-for f in $(find /var/spool/ngcp/moh/ -type f -ctime 1); do
-	rm $f
-done
+find /var/spool/ngcp/moh/ -type f -ctime 1 -exec rm {} \;
