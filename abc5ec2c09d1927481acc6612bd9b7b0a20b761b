@@ -16,6 +16,24 @@
       "revId": "abc5ec2c09d1927481acc6612bd9b7b0a20b761b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_c6c0242d",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-18T21:40:33Z",
+      "side": 1,
+      "message": "I agree with the report at \u003chttps://github.com/Perl-Critic/Perl-Critic/issues/289\u003e, because the check is useful, just not for the top-level code. :/",
+      "parentUuid": "1a106d94_66821002",
+      "revId": "abc5ec2c09d1927481acc6612bd9b7b0a20b761b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
