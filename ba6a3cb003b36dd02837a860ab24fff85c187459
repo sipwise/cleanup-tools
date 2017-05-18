@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_46b9d4e8",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-05-18T14:20:47Z",
+      "side": 1,
+      "message": "me too",
+      "parentUuid": "1a106d94_6641700b",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "ba6a3cb003b36dd02837a860ab24fff85c187459",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_86c0ec7d",
         "filename": "acc-cleanup.pl",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "perlcritic just requires that either all are and/or, or \u0026\u0026/|| and similar. Both have their place, it\u0027s just that mixing them is confusing for the reader.",
       "parentUuid": "1a106d94_86c0ec7d",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "ba6a3cb003b36dd02837a860ab24fff85c187459",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_a6cd2889",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-05-18T14:20:47Z",
+      "side": 1,
+      "message": "would not be against forcing those shortcut ops because of their lowest precedence",
+      "parentUuid": "1a106d94_063cfc92",
       "range": {
         "startLine": 24,
         "startChar": 14,
