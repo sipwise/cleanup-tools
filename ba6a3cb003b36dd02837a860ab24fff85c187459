@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_6641700b",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-18T13:16:30Z",
+      "side": 1,
+      "message": "Personally I find English a bit atrocious. :)",
+      "parentUuid": "1a106d94_e6bd6004",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "ba6a3cb003b36dd02837a860ab24fff85c187459",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_86c0ec7d",
         "filename": "acc-cleanup.pl",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-18T13:08:43Z",
       "side": 1,
       "message": "i ever prefererd those, but i know some others not :-)\nare they perlcritic standard now?",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "ba6a3cb003b36dd02837a860ab24fff85c187459",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_063cfc92",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-18T13:16:30Z",
+      "side": 1,
+      "message": "perlcritic just requires that either all are and/or, or \u0026\u0026/|| and similar. Both have their place, it\u0027s just that mixing them is confusing for the reader.",
+      "parentUuid": "1a106d94_86c0ec7d",
       "range": {
         "startLine": 24,
         "startChar": 14,
