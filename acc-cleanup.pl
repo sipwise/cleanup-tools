@@ -6,13 +6,12 @@ use DBI;
 use Sys::Syslog;
 
 openlog("acc-cleanup", "ndelay,pid", "daemon");
-$SIG{__WARN__} = $SIG{__DIE__} = sub {
+$SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalizedPunctuationVars)
 	syslog('warning', "@_");
 };
 
 my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
 #$config_file = "/home/rkrenn/test/acc-cleanup.conf";
-open(CONFIG, "<", $config_file) or die("Program stopping, couldn't open the configuration file '$config_file'.\n");
 
 ########################################################################
 
@@ -22,7 +21,7 @@ sub delete_loop {
 	my ($table, $mtable, $col, $mstart) = @_;
 
 	my $limit = '';
-	$vars{batch} && $vars{batch} > 0 and $limit = " limit $vars{batch}";
+	$vars{batch} and $vars{batch} > 0 and $limit = " limit $vars{batch}";
 
 	my $sth = $dbh->prepare("show fields from $table");
 	$sth->execute;
@@ -122,7 +121,7 @@ sub cleanup {
 	my ($table) = @_;
 
 	my $limit = '';
-	$vars{batch} && $vars{batch} > 0 and $limit = " limit $vars{batch}";
+	$vars{batch} and $vars{batch} > 0 and $limit = " limit $vars{batch}";
 	my $col = $vars{"time-column"};
 
 	while (1) {
@@ -195,7 +194,9 @@ $cmds{cleanup} = sub {
 	cleanup($table);
 };
 
-while (my $line = <CONFIG>) {
+open my $config_fh, '<', $config_file or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
+
+while (my $line = <$config_fh>) {
 	$line =~ s/^\s*//s;
 	$line =~ s/\s*$//s;
 
@@ -218,3 +219,5 @@ while (my $line = <CONFIG>) {
 
 	$sub->($rest, \@rest);
 }
+
+close $config_fh;

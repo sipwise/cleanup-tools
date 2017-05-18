@@ -7,31 +7,25 @@ use DBI;
 use Sys::Syslog;
 
 openlog("binglog-purge", "ndelay,pid", "daemon");
-$SIG{__WARN__} = $SIG{__DIE__} = sub {
+$SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalizedPunctuationVars)
 	syslog('warning', "@_");
 };
 
-our $DBUSER;
-our $DBPASS;
-our $DBREMOTEUSER;
-our $DBREMOTEPASS;;
-
+my %config = map { $_ => undef } qw(dbuser dbpass dbremoteuser dbremotepass);
 
 my $config_file = "/etc/ngcp-cleanup-tools/binlog-purge.conf";
-open CONFIG, "$config_file" or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
+open my $config_fh, '<', $config_file or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
 
-no strict 'refs';
-while (<CONFIG>) {
+while (<$config_fh>) {
     chomp;                  # no newline
     s/#.*//;                # no comments
     s/^\s+//;               # no leading white
     s/\s+$//;               # no trailing white
     next unless length;     # anything left?
     my ($var, $value) = split(/\s*=\s*/, $_, 2);
-        $$var = $value;
+        $config{lc $var} = $value;
 }
-use strict 'refs';
-close CONFIG;
+close $config_fh;
 
 
 my (undef, $me)		= uname();
@@ -45,8 +39,8 @@ elsif ($me eq "sp2") {
 }
  
 
-my @creds = ('dbi:mysql:', $DBUSER, $DBPASS);
-my @remotecreds = ('dbi:mysql:', $DBREMOTEUSER, $DBREMOTEPASS);
+my @creds = ('dbi:mysql:', $config{dbuser}, $config{dbpass});
+my @remotecreds = ('dbi:mysql:', $config{dbremoteuser}, $config{dbremotepass});
 
 
 my $dbh = DBI->connect(@creds) or die;
