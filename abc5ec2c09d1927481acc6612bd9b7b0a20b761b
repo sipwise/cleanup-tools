@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_66821002",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-18T15:13:35Z",
+      "side": 1,
+      "message": "BTW: I find that \"## no critic ...\" quite ugly, is that something we should ignore by-default maybe?",
+      "revId": "abc5ec2c09d1927481acc6612bd9b7b0a20b761b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
