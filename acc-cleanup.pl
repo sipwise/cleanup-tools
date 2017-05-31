@@ -11,7 +11,6 @@ $SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalized
 };
 
 my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
-#$config_file = "/home/rkrenn/test/acc-cleanup.conf";
 
 ########################################################################
 
@@ -144,6 +143,15 @@ $cmds{unset} = sub {
 	delete($vars{$var});
 };
 
+$cmds{set} = sub {
+	my ($var,$val) = @_;
+
+	$var or die("Syntax error in set command");
+	$val = $val->[1] if 'ARRAY' eq ref $val;
+
+	$vars{$var} = $val;
+};
+
 $cmds{connect} = sub {
 	my ($db) = @_;
 
@@ -196,6 +204,8 @@ $cmds{cleanup} = sub {
 
 open my $config_fh, '<', $config_file or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
 
+my @deferred = ();
+
 while (my $line = <$config_fh>) {
 	$line =~ s/^\s*//s;
 	$line =~ s/\s*$//s;
@@ -204,20 +214,28 @@ while (my $line = <$config_fh>) {
 	$line =~ /^$/ and next;
 
 	if ($line =~ /^([\w-]+)\s*=\s*(\S*)$/) {
-		$vars{$1} = $2;
+		if (lc($1) eq 'maintenance' and $2 eq 'yes') {
+		    @deferred = ();
+			last;
+		}
+		push(@deferred,{ 'sub' => $cmds{set}, 'arg' => $1, 'args' => [ $1, $2 ] });
 		next;
 	}
 
-	my ($cmd, $rest) = $line =~ /^([\w-]+)(?:\s+(.*?))?$/;
+	my ($cmd, $arg) = $line =~ /^([\w-]+)(?:\s+(.*?))?$/;
 	$cmd or die("Syntax error in config file: '$line'");
 
 	my $sub = $cmds{$cmd};
 	$sub or die("Unrecognized statement '$cmd'");
 
-	my @rest;
-	$rest and @rest = split(/\s+/, $rest);
+	my @args;
+	$arg and @args = split(/\s+/, $arg);
 
-	$sub->($rest, \@rest);
+	push(@deferred,{ 'sub' => $sub, 'arg' => $arg, 'args' => \@args });
 }
 
 close $config_fh;
+
+foreach my $cmd (@deferred) {
+	$cmd->{'sub'}->($cmd->{'arg'}, $cmd->{'args'});
+}
