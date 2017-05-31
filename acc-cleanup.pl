@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use DBI;
 use Sys::Syslog;
+use Config::Any;
 
 openlog("acc-cleanup", "ndelay,pid", "daemon");
 $SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalizedPunctuationVars)
@@ -11,7 +12,7 @@ $SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalized
 };
 
 my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
-#$config_file = "/home/rkrenn/test/acc-cleanup.conf";
+my $config_yml = "/etc/ngcp-config/config.yml";
 
 ########################################################################
 
@@ -194,30 +195,39 @@ $cmds{cleanup} = sub {
 	cleanup($table);
 };
 
-open my $config_fh, '<', $config_file or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
+my $maintenance = eval {
+	return Config::Any->load_files({files => [ $config_yml ] })->[0]->{$config_yml}->{general}->{maintenance};
+};
+if ($@) {
+	die "Program stopping, couldn't read '$config_file': $@.\n";
+} elsif (defined $maintenance and 'yes' eq $maintenance) {
+	die "Program stopping, maintenance mode enabled.\n";
+} else {
+	open my $config_fh, '<', $config_file or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
 
-while (my $line = <$config_fh>) {
-	$line =~ s/^\s*//s;
-	$line =~ s/\s*$//s;
+	while (my $line = <$config_fh>) {
+		$line =~ s/^\s*//s;
+		$line =~ s/\s*$//s;
 
-	$line =~ /^#/ and next;
-	$line =~ /^$/ and next;
+		$line =~ /^#/ and next;
+		$line =~ /^$/ and next;
 
-	if ($line =~ /^([\w-]+)\s*=\s*(\S*)$/) {
-		$vars{$1} = $2;
-		next;
+		if ($line =~ /^([\w-]+)\s*=\s*(\S*)$/) {
+			$vars{$1} = $2;
+			next;
+		}
+
+		my ($cmd, $rest) = $line =~ /^([\w-]+)(?:\s+(.*?))?$/;
+		$cmd or die("Syntax error in config file: '$line'");
+
+		my $sub = $cmds{$cmd};
+		$sub or die("Unrecognized statement '$cmd'");
+
+		my @rest;
+		$rest and @rest = split(/\s+/, $rest);
+
+		$sub->($rest, \@rest);
 	}
 
-	my ($cmd, $rest) = $line =~ /^([\w-]+)(?:\s+(.*?))?$/;
-	$cmd or die("Syntax error in config file: '$line'");
-
-	my $sub = $cmds{$cmd};
-	$sub or die("Unrecognized statement '$cmd'");
-
-	my @rest;
-	$rest and @rest = split(/\s+/, $rest);
-
-	$sub->($rest, \@rest);
+	close $config_fh;
 }
-
-close $config_fh;
