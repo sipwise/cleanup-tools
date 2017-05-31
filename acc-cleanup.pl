@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use DBI;
 use Sys::Syslog;
+use Config::Any;
 
 openlog("acc-cleanup", "ndelay,pid", "daemon");
 $SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalizedPunctuationVars)
@@ -11,7 +12,6 @@ $SIG{__WARN__} = $SIG{__DIE__} = sub { ## no critic (Variables::RequireLocalized
 };
 
 my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
-#$config_file = "/home/rkrenn/test/acc-cleanup.conf";
 
 ########################################################################
 
@@ -196,6 +196,8 @@ $cmds{cleanup} = sub {
 
 open my $config_fh, '<', $config_file or die "Program stopping, couldn't open the configuration file '$config_file'.\n";
 
+my @deferred = ();
+
 while (my $line = <$config_fh>) {
 	$line =~ s/^\s*//s;
 	$line =~ s/\s*$//s;
@@ -204,20 +206,28 @@ while (my $line = <$config_fh>) {
 	$line =~ /^$/ and next;
 
 	if ($line =~ /^([\w-]+)\s*=\s*(\S*)$/) {
+		if (lc($1) eq 'maintenance' and $2 eq 'yes') {
+			die "Program stopping, maintenance mode enabled.\n";
+		}
 		$vars{$1} = $2;
 		next;
 	}
 
-	my ($cmd, $rest) = $line =~ /^([\w-]+)(?:\s+(.*?))?$/;
+	my ($cmd, $arg) = $line =~ /^([\w-]+)(?:\s+(.*?))?$/;
 	$cmd or die("Syntax error in config file: '$line'");
 
 	my $sub = $cmds{$cmd};
 	$sub or die("Unrecognized statement '$cmd'");
 
-	my @rest;
-	$rest and @rest = split(/\s+/, $rest);
+	my @args;
+	$arg and @args = split(/\s+/, $arg);
 
-	$sub->($rest, \@rest);
+	push(@deferred,{ 'sub' => $sub, 'context' => { %vars }, 'arg' => $arg, 'args' => \@args });
 }
 
 close $config_fh;
+
+foreach my $cmd (@deferred) {
+	%vars = %{$cmd->{'context'}};
+	$cmd->{'sub'}->($cmd->{'arg'}, $cmd->{'args'});
+}
