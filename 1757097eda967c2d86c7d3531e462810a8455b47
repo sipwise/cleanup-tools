@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_81aabad2",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T08:18:16Z",
+      "side": 1,
+      "message": "no, we must not read config.yml from the services directly.\nIt may contains not-yet \"applied\" changes.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "1757097eda967c2d86c7d3531e462810a8455b47",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
