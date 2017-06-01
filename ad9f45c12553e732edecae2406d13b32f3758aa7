@@ -91,6 +91,30 @@
       "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_c1cda25f",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-06-01T11:40:33Z",
+      "side": 1,
+      "message": "The \"config\" is really a series of statements that are executed in order, like a script.\n\nTo keep in line with that, I think the best approach to implement maintenance mode is to either blank out the config completely if it\u0027s enabled (in this case, no changes to acc-cleanup.pl are required, and the script would simply do nothing if started), or to include an \"exit now\" statement at the start of the config.",
+      "parentUuid": "dacfb570_218f2e25",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 1
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
