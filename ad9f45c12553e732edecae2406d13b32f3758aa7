@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "dacfb570_21048e7d",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T11:42:16Z",
+      "side": 1,
+      "message": "P.S. this is a reason of my -1 here.",
+      "parentUuid": "dacfb570_01730a4e",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dacfb570_218f2e25",
         "filename": "acc-cleanup.pl",
         "patchSetId": 3
@@ -106,6 +130,30 @@
       "side": 1,
       "message": "The \"config\" is really a series of statements that are executed in order, like a script.\n\nTo keep in line with that, I think the best approach to implement maintenance mode is to either blank out the config completely if it\u0027s enabled (in this case, no changes to acc-cleanup.pl are required, and the script would simply do nothing if started), or to include an \"exit now\" statement at the start of the config.",
       "parentUuid": "dacfb570_218f2e25",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 1
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_01d86a1c",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T11:42:16Z",
+      "side": 1,
+      "message": "Ah, I see now, maybe then maintenance mode should be just in cron template to do not start it at all. While up 2 you here.",
+      "parentUuid": "dacfb570_c1cda25f",
       "range": {
         "startLine": 222,
         "startChar": 0,
