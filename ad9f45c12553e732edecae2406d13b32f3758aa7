@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_e1754633",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T11:18:59Z",
+      "side": 1,
+      "message": "customtt must be merged on every upgrade.\neven on hotfix installation.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_41943237",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T11:18:59Z",
+      "side": 1,
+      "message": "typo?\n\nBTW, what is a batch file?",
+      "range": {
+        "startLine": 14,
+        "startChar": 30,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_01730a4e",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T11:18:59Z",
+      "side": 1,
+      "message": "that means exit code 1  and email from cron to admin@\nright? it is not was we want here.",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_218f2e25",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-01T11:18:59Z",
+      "side": 1,
+      "message": "I can\u0027t understand this, how it is related to maintenance mode?",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 1
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
