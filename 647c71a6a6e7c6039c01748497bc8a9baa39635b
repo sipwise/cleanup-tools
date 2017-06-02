@@ -1,0 +1,8 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Richard Fuchs <rfuchs@sipwise.com>
+Code-Review+1: Alexander Lutay <alutay@sipwise.com>
+Submitted-by: Rene Krenn <rkrenn@sipwise.com>
+Submitted-at: Fri, 02 Jun 2017 18:02:59 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/13594
+Project: cleanup-tools
+Branch: refs/heads/master
