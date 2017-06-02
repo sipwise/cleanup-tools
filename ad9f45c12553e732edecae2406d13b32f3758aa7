@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "dacfb570_e43394f4",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-06-02T11:02:10Z",
+      "side": 1,
+      "message": "was thinking about dying here or not also, but on the other hand, isnt it good to get notified that a backup/cleanup run was skipped due to maintenance mode?",
+      "parentUuid": "dacfb570_21048e7d",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 55
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dacfb570_218f2e25",
         "filename": "acc-cleanup.pl",
         "patchSetId": 3
@@ -154,6 +178,30 @@
       "side": 1,
       "message": "Ah, I see now, maybe then maintenance mode should be just in cron template to do not start it at all. While up 2 you here.",
       "parentUuid": "dacfb570_c1cda25f",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 1
+      },
+      "revId": "ad9f45c12553e732edecae2406d13b32f3758aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_043158ec",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-06-02T11:02:10Z",
+      "side": 1,
+      "message": "\u003einclude an \"exit now\" statement at the start of the config.\nthats how it actually works now, with that \"maintance \u003d yes\" line. plus the advantage its not mandatory to put it at the beginning. which imho is helpful especially if customtt\u0027s will be amended manually.",
+      "parentUuid": "dacfb570_01d86a1c",
       "range": {
         "startLine": 222,
         "startChar": 0,
