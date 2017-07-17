@@ -1,3 +1,19 @@
+ngcp-cleanup-tools (5.4.1.0+0~mr5.4.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [1ca0356] TT#15855 Fix shellcheck warning for moh-cleanup
+  * [bdde38d] TT#15855 Fix shellcheck warning for elasticsearch-remove-old-indices
+
+  [ Guillem Jover ]
+  * [abc5ec2] TT#16370 Fix perlcritic errors
+
+  [ Rene Krenn ]
+  * [647c71a] MT#16807 exit backup run if maintenance mode
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 17 Jul 2017 22:41:52 +0200
+
 ngcp-cleanup-tools (5.4.0.0+0~mr5.4.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
