@@ -16,8 +16,16 @@ my $config_file = "/etc/ngcp-cleanup-tools/acc-cleanup.conf";
 
 my (%vars, $dbh);
 
-sub delete_loop {
-	my ($table, $mtable, $col, $mstart) = @_;
+#   time-column = start_time
+#   backup-months = 7
+#   backup-retro = 3
+#   backup cdr
+$vars{'backup-months'} = 7;
+$vars{'backup-retro'} = 3;
+backup_table('cdr');
+
+sub move_loop {
+	my ($table, $mtable, $col, $start, $stop) = @_;
 
 	my $limit = '';
 	$vars{batch} and $vars{batch} > 0 and $limit = " limit $vars{batch}";
@@ -43,7 +51,8 @@ sub delete_loop {
 		my $temp_table = $table . "_tmp";
 		my $size = $dbh->do("create temporary table $temp_table as ".
 		        "(select $primary_key_cols from $table " .
-				"where $col >= ? and $col < date_add(?, interval 1 month) $limit)",undef, $mstart, $mstart)
+				#"where $col >= ? and $col < date_add(?, interval 1 month) $limit)",undef, $mstart, $mstart)
+				"where $col >= ? and $col < ? $limit)",undef, $start, $stop)
 			or die("Failed to create temporary table $temp_table: " . $DBI::errstr);
 		if ($size > 0) {
 			$dbh->do("insert into $mtable select s.* from ".
@@ -100,17 +109,39 @@ sub archive_dump {
 sub backup_table {
 	my ($table) = @_;
 
-	for my $cmonth (0 .. ($vars{"backup-retro"} - 1)) {
-		my $tmonths = $cmonth + $vars{"backup-months"};
-		my $bt = time() - int(30.4375 * 86400 * $tmonths);
-		my @bt = localtime($bt);
-		my $tstampl = sprintf('%04i-%02i', $bt[5] + 1900, $bt[4] + 1);
-		my $tstamp = sprintf('%04i%02i', $bt[5] + 1900, $bt[4] + 1);
-		my $mstart = "$tstampl-01 00:00:00";
+	#for my $cmonth (0 .. ($vars{"backup-retro"} - 1)) {
+	#	my $tmonths = $cmonth + $vars{"backup-months"};
+	#	my $bt = time() - int(30.4375 * 86400 * $tmonths);
+	#	my @bt = localtime($bt);
+	#	my $tstampl = sprintf('%04i-%02i', $bt[5] + 1900, $bt[4] + 1);
+	#	my $tstamp = sprintf('%04i%02i', $bt[5] + 1900, $bt[4] + 1);
+	#	my $mstart = "$tstampl-01 00:00:00";
+	#	my $date = sprintf('%04i-%02i-%02i', $bt[5] + 1900, $bt[4] + 1, $bt[3]);
+	#
+	#	my $mtable = $table . "_$tstamp";
+	#	$dbh->do("create table if not exists $mtable like $table");
+	#	move_loop($table, $mtable, $vars{"time-column"}, $mstart, $date);
+	#}
 
-		my $mtable = $table . "_$tstamp";
-		$dbh->do("create table if not exists $mtable like $table");
-		delete_loop($table, $mtable, $vars{"time-column"}, $mstart);
+	my @range = ();
+	foreach my $cmonth (($vars{"backup-retro"} - 1,0)) {
+		my $tmonths = $cmonth + $vars{"backup-months"};
+		my $t = time() - int(30.4375 * 86400 * $tmonths);
+		push(@range,[localtime($t)]);
+	}
+	my $date = sprintf('%04i-%02i-01', $range[0][5] + 1900, $range[0][4] + 1);
+	my $stop = sprintf('%04i-%02i-%02i', $range[1][5] + 1900, $range[1][4] + 1,
+		_days_of_month($range[1][4] + 1, $range[1][5] + 1900));
+	my $next;
+	while (($date cmp $stop) <= 0) {
+		my ($y,$m,$d) = _split_date($date);
+		my $mtable = $table . "_$y$m";
+		#$dbh->do("create table if not exists $mtable like $table");
+		$next = _add_days($date,1);
+		print "$date 00:00:00 - $next 00:00:00\n";
+		#move_loop($table, $mtable, $vars{"time-column"}, "$date 00:00:00", "$next 00:00:00");
+	} continue {
+		$date = $next;
 	}
 
 	return 1;
@@ -129,6 +160,112 @@ sub cleanup {
 		$aff or die("Unable to delete records from $table");
 		$aff == 0 and last;
 	}
+}
+
+sub _add_days {
+
+	my ($date,$ads) = @_;
+
+	my ($year,$month,$day) = _split_date($date);
+
+	my $rday = $day;
+	my $rmonth = $month;
+	my $ryear = $year;
+
+	my $result;
+
+	if($ads >= 0) { # addition
+		for (1 .. $ads) {
+			# increment day, turn month forward:
+			if ($rday < _days_of_month($rmonth,$ryear)) {
+				$rday++;
+			} else {
+				$rmonth++;
+				$rday = 1;
+			}
+			# turn year forward:
+			if ($rmonth > 12) {
+				$rday = 1;
+				$rmonth = 1;
+				$ryear++;
+			}
+		}
+	} else { # difference
+		my $subs = -1 * $ads;
+		for (1 .. $subs) {
+			# decrement day, turn month backward
+			if ($rday > 1) {
+				$rday--;
+			} else {
+				$rmonth--;
+				$rday = _days_of_month($rmonth,$ryear);
+			}
+			# turn year backward:
+			if ($rmonth < 1) {
+				$rmonth = 12;
+				$rday = _days_of_month($rmonth,$ryear);
+				$ryear--;
+			}
+		}
+	}
+
+	return $ryear . '-' . _zerofill($rmonth,2) . '-' . _zerofill($rday,2);
+
+}
+
+sub _split_date {
+
+	my $datestring = shift;
+	return split /-/,$datestring,3;
+
+}
+
+sub _zerofill {
+	my ($i,$d) = @_;
+	my $z = $d - length($i);
+	my $res = $i;
+	if ($d > 0) {
+		foreach (1 .. $z) {
+			$res = '0' . $res;
+		}
+	}
+	return $res;
+}
+
+sub _days_of_month {
+
+	my ($month, $year) = @_;
+	if ($month > 0  and $month <= 12) {
+		if ($month == 2 and _is_leapyear($year)) { # leapyear
+			return 29;
+		} else {
+			my @daysofmonths = (31,28,31,30,31,30,31,31,30,31,30,31);
+			return $daysofmonths[$month - 1];
+		}
+	} else {
+		return 0;
+	}
+
+}
+
+sub _is_leapyear {
+
+	my $year = shift;
+	my $v = 0;
+	if (!$year) {
+		return -1;
+	}
+	if ($year % 4 == 0) {
+		$v = 1;
+	}
+	if ($year % 100 == 0) {
+		$v = 0;
+	}
+	if ($year % 400 == 0) {
+		$v = 1;
+	}
+	return $v;
+
 }
 
 ########################################################################
