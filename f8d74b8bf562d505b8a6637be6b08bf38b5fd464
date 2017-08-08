@@ -22,6 +22,30 @@
       "revId": "f8d74b8bf562d505b8a6637be6b08bf38b5fd464",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_1fc51e5b",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-08-08T15:15:23Z",
+      "side": 1,
+      "message": "it\u0027s ok as such calculation is performed only once by the optimizer and does not affect the performance",
+      "parentUuid": "5adbc538_5fbfa6d0",
+      "range": {
+        "startLine": 159,
+        "startChar": 75,
+        "endLine": 159,
+        "endChar": 83
+      },
+      "revId": "f8d74b8bf562d505b8a6637be6b08bf38b5fd464",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
