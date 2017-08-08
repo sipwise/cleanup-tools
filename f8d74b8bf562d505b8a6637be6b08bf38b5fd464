@@ -70,6 +70,30 @@
       "revId": "f8d74b8bf562d505b8a6637be6b08bf38b5fd464",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_1fd8be1c",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-08-08T15:47:15Z",
+      "side": 1,
+      "message": "updated the \"backup\" places to use precalculated $mstart and $mend, for the cleanup part it works differently and on the daily basis, so imho no need to create the DateTime object here and calculate it as it is in this place simpler and less code to just let mariadb do that.",
+      "parentUuid": "5adbc538_3fdd7a15",
+      "range": {
+        "startLine": 159,
+        "startChar": 75,
+        "endLine": 159,
+        "endChar": 83
+      },
+      "revId": "f8d74b8bf562d505b8a6637be6b08bf38b5fd464",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
