@@ -13,8 +13,8 @@ Package: ngcp-cleanup-tools-ce
 Architecture: all
 Depends:
  libconfig-any-perl,
+ libdatetime-perl,
  libdbi-perl,
- libsys-syslog-perl,
  ${misc:Depends},
  ${perl:Depends},
 Conflicts:
@@ -31,9 +31,9 @@ Package: ngcp-cleanup-tools-pro
 Architecture: all
 Depends:
  libconfig-any-perl,
+ libdatetime-perl,
  libdbi-perl,
  libredis-perl,
- libsys-syslog-perl,
  ${misc:Depends},
  ${perl:Depends},
 Conflicts:
