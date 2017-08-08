@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5adbc538_5fbfa6d0",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-08-08T15:08:37Z",
+      "side": 1,
+      "message": "should be moved to perl side-date calculation also then",
+      "range": {
+        "startLine": 159,
+        "startChar": 75,
+        "endLine": 159,
+        "endChar": 83
+      },
+      "revId": "f8d74b8bf562d505b8a6637be6b08bf38b5fd464",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
