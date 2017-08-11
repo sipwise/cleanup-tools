@@ -83,11 +83,11 @@ sub init_log {
     my $debug = $self->env('debug') ? 'DEBUG' : 'INFO';
 
 Log::Log4perl->init(\<<EOF);
-log4perl.category.acc-cleanup=$debug, SYSLOG, SCREEN
+log4perl.category.ngcp-cleanup=$debug, SYSLOG, SCREEN
 
 log4perl.appender.SYSLOG=Log::Dispatch::Syslog
 log4perl.appender.SYSLOG.facility=local0
-log4perl.appender.SYSLOG.ident=acc-cleanup
+log4perl.appender.SYSLOG.ident=ngcp-cleanup
 log4perl.appender.SYSLOG.layout=PatternLayout
 log4perl.appender.SYSLOG.layout.ConversionPattern=%-5p %m%n
 
@@ -97,7 +97,7 @@ log4perl.appender.SCREEN.layout=PatternLayout
 log4perl.appender.SCREEN.layout.ConversionPattern=%-5p %m%n
 EOF
 
-    $log = Log::Log4perl->get_logger("acc-cleanup");
+    $log = Log::Log4perl->get_logger("ngcp-cleanup");
 }
 
 sub init_cmds {
@@ -304,7 +304,7 @@ sub drop_partition {
     $dbh->do(<<SQL);
 ALTER TABLE $table DROP PARTITION $pname
 SQL
-    $self->debug("drop partition $pname from table $table");
+    $self->debug("drop partition=$pname from table=$table");
     die "Cannot drop partition $pname: ".$DBI::errstr if $DBI::err;
 }
 
@@ -320,7 +320,7 @@ sub update_partitions {
     my ($min_ts, $max_ts) = $self->fetch_row(undef, $table, join(',', @cols));
 
     unless ($min_ts) {
-        $self->debug("$table: empty table, nothing to partition");
+        #$self->debug("table=$table: empty, nothing to partition");
         return unless $min_ts;
     }
 
@@ -330,7 +330,8 @@ sub update_partitions {
     $dt_max->add(months => 1)->truncate(to => 'month'); # extra month
     my $months = ($dt_max - $dt_min)->months;
 
-    $self->debug("$table: checking from $dt_min to $dt_max");
+    $self->debug(sprintf "table=%s checking start=%s end=%s",
+        $table, $dt_min->strftime('%Y-%m-%d'), $dt_max->strftime('%Y-%m-%d'));
 
     if ($months >= $MAX_PARTITIONS) {
         die sprintf "%s%s",
@@ -376,8 +377,8 @@ SQL
         foreach my $part (keys %{$all_parts}) {
             my $pdt = DateTime->now(time_zone => 'local',
                                     epoch => $all_parts->{$part}->{value});
-            # drop only if the partition is older than the possible min
-            if ($pdt < $dt_min) {
+            # drop partitions older than the possible min
+            if ($pdt <= $dt_min) {
                 $self->drop_partition($table, $part);
             }
         }
@@ -399,14 +400,14 @@ sub backup_partition {
     my ($min_ts, $max_ts) = $self->fetch_row(undef, $table, join(',', @cols));
         return unless $min_ts; # empty table
 
-    $self->debug("checking source=$table pname=$pname");
+    $self->debug("checking table=$table pname=$pname");
 
     if ($self->check_partition_exists($table, $pname)) {
         my ($min_ts, $max_ts) = $self->fetch_row(undef, $table, join(',', @cols),
                                     "PARTITION ($pname)");
         return unless $min_ts;
 
-        $self->debug("$table -> $mtable");
+        $self->debug("table=$table backup=$mtable");
 
         if ($self->check_table_exists($mtable)) {
             die sprintf "%s %s",
@@ -427,7 +428,7 @@ sub backup_partition {
 sub delete_loop {
     my ($self, $table, $mtable, $mstart, $mend) = @_;
 
-    $self->debug("$table -> $mtable");
+    $self->debug("table=$table backup=$mtable");
 
     my $dbh = $self->env('dbh');
     my $batch = $self->env('batch') // 0;
@@ -540,9 +541,9 @@ sub archive_dump {
                     die "Gzipping of dump file $fname failed\n";
                 }
             }
-            $self->debug("created backup: $fname");
+            $self->debug("created backup=$fname");
         }
-        $self->debug("drop table: $mtable");
+        $self->debug("drop table=$mtable");
         $dbh->do("drop table $mtable");
         $month++;
     }
@@ -597,7 +598,7 @@ SQL
         $deleted_rows += $aff;
         last unless $aff;
     }
-    $self->debug("$table: deleted $deleted_rows rows");
+    $self->debug("table=$table deleted rows=$deleted_rows");
 }
 
 1;
