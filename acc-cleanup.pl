@@ -90,6 +90,29 @@ sub _get_transformed_value {
 	return &{$col->{transformation}->{value}}($value,@{$col->{value_args}});
 }
 
+sub _replication_lag_wait {
+	while (1) {
+		last unless _replication_lag_sleep();
+	}
+}
+
+sub _replication_lag_sleep {
+	if (defined (my $lag_limit = $vars{"lag-limit"}) and defined (my $lag_sleep = $vars{"lag-sleep"})) {
+		my $sth = $dbh->prepare("show slave status");
+		$sth->execute;
+		my ($slave_status) = $sth->fetchrow_array();
+		$sth->finish;
+		if ($slave_status =~ /Seconds_Behind_Master:\s+(\d+)/m) {
+			if ($1 > $lag_limit) {
+				print "replication lag $1 secs exceeds threshold $lag_limit secs, sleep for $lag_sleep secs\n";
+				sleep($lag_sleep);
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
 sub _connect {
 
 	my ($db) = @_;
@@ -122,6 +145,7 @@ sub _delete_loop {
 			or die("Unable to delete records from $table: " . $DBI::errstr);
 		$total += $size;
 		last unless $size > 0;
+		_replication_lag_wait();
 	}
 	return $total;
 
@@ -172,6 +196,7 @@ sub _move_loop {
 			or die("Failed to drop temporary table $temp_table: " . $DBI::errstr);
 		$total += $size;
 		last unless $size > 0;
+		_replication_lag_wait();
 	}
 	return $total;
 
@@ -187,6 +212,7 @@ sub archive_dump {
 		my $mtable = $table . "_" . sprintf('%04i%02i', $y, $m);
 		my $res = $dbh->selectcol_arrayref("show table status like ?", undef, $mtable);
 		($res && @$res && $res->[0]) or last;
+		_replication_lag_wait();
 		$dbh->disconnect;
 		#print "archiving $mtable\n";
 		$month++;
@@ -248,7 +274,8 @@ sub backup_table {
 		$counts{$mtable} += $total;
 		$months_total += $total;
 		if (defined $vars{"backup-limit"} and $months_total >= $vars{"backup-limit"}) {
-			#print "$months_total rows moved, more than $vars{backup-limit}, stopping\n";
+			my $limit = $vars{"backup-limit"};
+			#print "$months_total rows moved, more than $limit, stopping\n";
 			last;
 		}
 	} continue {
