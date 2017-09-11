@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab399f4_1506e320",
+        "filename": "acc-cleanup.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2017-09-11T13:29:04Z",
+      "side": 1,
+      "message": "It should be:\n#print \u0027$months_total rows moved, more than $vars{\"backup-limit\"}, stopping\\n\u0027;",
+      "range": {
+        "startLine": 277,
+        "startChar": 3,
+        "endLine": 277,
+        "endChar": 80
+      },
+      "revId": "1d05a60680376e4ec3a9a608f1fcffd1a797d51d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
