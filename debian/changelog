@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (0.17.7.0+0~mr4.5.7.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [a85a206] TT#19706 refactor to day-based processing of months
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Sep 2017 14:29:18 +0200
+
 ngcp-cleanup-tools (0.17.6.0+0~mr4.5.6.0) unstable; urgency=medium
 
   * New release.
