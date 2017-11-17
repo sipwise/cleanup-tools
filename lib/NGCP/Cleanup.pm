@@ -284,10 +284,11 @@ SQL
 sub create_partitions {
     my ($self, $table, $mpart, $mdt, $gap) = @_;
     my $dbh = $self->env('dbh');
+    my $col = $self->env('time-column');
 
     my $parts = $self->build_partitions_list($table, $mpart, $mdt, $gap);
     my $sql = <<SQL;
-ALTER TABLE $table PARTITION BY RANGE(FLOOR(start_time))
+ALTER TABLE $table PARTITION BY RANGE(FLOOR($col))
 (
 $parts
 );
