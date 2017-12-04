@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (5.5.2.1+0~mr5.5.2.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3802161] TT#3668 fix time-column to be used for partitioning table
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Dec 2017 11:37:38 +0100
+
 ngcp-cleanup-tools (5.5.2.0+0~mr5.5.2.0) unstable; urgency=medium
 
   * New release.
