@@ -148,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "5ac4a560_f5a6d852",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-12T14:53:33Z",
+      "side": 1,
+      "message": "its still safe regarding any duplication issues. i remember darkly to add that this in order to support ctrl-c interruption if run manually",
+      "parentUuid": "5ac4a560_75a48857",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac4a560_755f2873",
         "filename": "lib/NGCP/Cleanup.pm",
         "patchSetId": 1
