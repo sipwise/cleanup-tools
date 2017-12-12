@@ -411,25 +411,23 @@ sub backup_partition {
         $self->debug("table=$table backup=$mtable");
 
         if ($self->check_table_exists($mtable)) {
-            die sprintf "%s %s",
-                "$mtable: already exists, partition $pname",
-                "cannot be exchanged, manual fix is required.";
+            $self->info("table $mtable already exists, fallback to the table backup method");
+            $self->delete_loop($table, $bm);
         } else {
             $dbh->do("create table $mtable like $table");
+            die "Cannot create table: $mtable: ".$DBI::errstr if $DBI::err;
+            if ($self->check_table_partitioned($mtable)) {
+                # drop partitioning layout inherited from copied table creation
+                $dbh->do("alter table $mtable remove partitioning");
+            }
+            $dbh->do("alter table $table exchange partition $pname with table $mtable");
+            die "Cannot exchange partition $table -> $mtable: ".$DBI::errstr if $DBI::err;
         }
-        die "Cannot create table: $mtable: ".$DBI::errstr if $DBI::err;
-        if ($self->check_table_partitioned($mtable)) {
-            $dbh->do("alter table $mtable remove partitioning");
-        }
-        $dbh->do("alter table $table exchange partition $pname with table $mtable");
-        die "Cannot exchange partition $table -> $mtable: ".$DBI::errstr if $DBI::err;
     }
 }
 
 sub delete_loop {
-    my ($self, $table, $mtable, $mstart, $mend) = @_;
-
-    $self->debug("table=$table backup=$mtable");
+    my ($self, $table, $bm) = @_;
 
     my $dbh = $self->env('dbh');
     my $batch = $self->env('batch') // 0;
@@ -437,6 +435,13 @@ sub delete_loop {
 
     my $col = $self->env('time-column');
     my $col_mode = $self->env('time-column-mode');
+
+    my $mstart = $bm->strftime('%Y-%m-01 00:00:00');
+    my $mend   = $bm->add(months => 1)->subtract(seconds => 1)
+                          ->strftime('%Y-%m-%d %H:%M:%S');
+    my $mtable = $table . '_' . $bm->strftime('%Y%m');
+
+    $self->debug("table=$table backup=$mtable");
 
     my $sth = $dbh->prepare("show fields from $table");
     $sth->execute;
@@ -566,14 +571,10 @@ sub backup_table {
         my $now = DateTime->now(time_zone => 'local');
         my $bm = $now->clone;
         $bm->subtract(months => $tmonths)->truncate(to => 'month');
-        my $mstart = $bm->strftime('%Y-%m-01 00:00:00');
-        my $mend = $bm->add(months => 1)->subtract(seconds => 1)
-                    ->strftime('%Y-%m-%d %H:%M:%S');
-        my $mtable = $table . '_' . $bm->strftime('%Y%m');
         if ($use_part eq 'yes') {
             $self->backup_partition($table, $bm);
         } else {
-            $self->delete_loop($table, $mtable, $mstart, $mend);
+            $self->delete_loop($table, $bm);
         }
     }
 
