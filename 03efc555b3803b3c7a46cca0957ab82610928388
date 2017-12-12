@@ -162,6 +162,24 @@
       "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac4a560_55b6ac8b",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-12-12T14:47:52Z",
+      "side": 1,
+      "message": "this is the delete loop!\nadding wait state here can be considered but I would avoid it and here is why:\n- there are no linear determination of the speed of execution of the insert/delete statements to how fast they can be replicated, e.g. this statements are executed really fast but replication is struggling because of the overall I/O load caused by calls,etc.\n- on the other hand adding wait states based on the reading of the current replication state might be a solution\n- adding even 0.5 seconds sleep interval will cause 10000 iterations to take a minimum of around 1.5 hours to be completed, and not necessarily solving the issue with replication, unless of course the wait state is either based on the current replication state delay.\n- there are other mechanisms now to ease off replication and avoid delays in MariaDB, e.g. \"parallel replication\" that should solve the issue.\n\nP.S. this is kinda of scope for this review for sure but definitely something to consider and implement as a separate task.",
+      "parentUuid": "5ac4a560_755f2873",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
