@@ -130,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "5ac4a560_75a48857",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-12-12T14:38:29Z",
+      "side": 1,
+      "message": "e.g. what if for some mysql replication error+data rerating reason there are 2 cdrs with the same primary key but with some different data in other fields ?....",
+      "parentUuid": "5ac4a560_359a1015",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac4a560_755f2873",
         "filename": "lib/NGCP/Cleanup.pm",
         "patchSetId": 1
