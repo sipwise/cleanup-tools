@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac4a560_b550e05f",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-12T14:31:10Z",
+      "side": 1,
+      "message": "obsolete",
+      "range": {
+        "startLine": 325,
+        "startChar": 15,
+        "endLine": 325,
+        "endChar": 28
+      },
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac4a560_75ed688b",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-12T14:31:10Z",
+      "side": 1,
+      "message": "shouldnt backup_months be considered here as well?",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac4a560_15c7d413",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-12T14:31:10Z",
+      "side": 1,
+      "message": "why not using $all_parts here?",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac4a560_3565b045",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-12T14:31:10Z",
+      "side": 1,
+      "message": "ignore",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac4a560_755f2873",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-12T14:31:10Z",
+      "side": 1,
+      "message": "the wait state should also be but in here, and in the delete loop",
+      "revId": "03efc555b3803b3c7a46cca0957ab82610928388",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
