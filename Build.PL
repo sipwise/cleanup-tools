@@ -5,7 +5,7 @@ my $builder = Module::Build->new(
     dist_author       => 'Kirill Solomko <ksolomko@sipwise.com>',
     dist_version_from => 'lib/NGCP/Cleanup.pm',
     requires          => {
-        'DateTime'          => 0,
+        'DBI'          => 0,
     },
 );
 $builder->create_build_script;
