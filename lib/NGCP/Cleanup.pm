@@ -598,7 +598,7 @@ sub cleanup_table {
 DELETE FROM $table WHERE $col < date(date_sub(now(), interval ? day)) $limit
 SQL
         $deleted_rows += $aff;
-        last unless $aff;
+        last unless $aff > 0;
     }
     $self->debug("table=$table deleted rows=$deleted_rows");
 }
