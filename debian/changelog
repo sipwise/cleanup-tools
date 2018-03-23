@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (5.5.2.2+0~mr5.5.2.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [a99981c] TT#34653 fix module install and cleanup rows check
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 23 Mar 2018 16:12:40 +0100
+
 ngcp-cleanup-tools (5.5.2.1+0~mr5.5.2.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
