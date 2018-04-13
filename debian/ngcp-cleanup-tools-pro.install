@@ -2,6 +2,5 @@ usr/share/perl5/NGCP/Cleanup.pm  usr/share/perl5/NGCP/
 acc-cleanup.conf etc/ngcp-cleanup-tools/
 acc-cleanup.pl   usr/sbin/
 cleanup-old-cdr-files.pl   usr/sbin/
-elasticsearch-remove-old-indices usr/sbin/
 moh-cleanup      usr/sbin/
 sems_cleanup.pl usr/sbin/
