@@ -8,6 +8,7 @@ use DateTime;
 use Data::Dumper;
 use Log::Log4perl;
 use Log::Log4perl::Level;
+use Redis;
 
 my @queue = ();
 my %env = ();
@@ -114,6 +115,15 @@ sub init_cmds {
             $self->env(dbh => $dbh);
             $self->env(own_db => $db);
         },
+        'connect-redis' => sub {
+            my ($self, $db) = @_;
+            my $host = $self->env('host');
+            my $port = $self->env('redis-port');
+            my $redis = Redis->new(server => $host.':'.$port)
+                or die "Failed to connect to Redis $host:$port";
+            $redis->select($db);
+            $self->env(redis => $redis);
+        },
         backup => sub {
             my ($self, $table) = @_;
             $table or die "No table name given in backup command";
@@ -143,13 +153,23 @@ sub init_cmds {
         },
         cleanup => sub {
             my ($self, $table) = @_;
-            $table or die "No table name given in backup command";
-            $self->env('dbh') or die "Not connected to a DB in archive command";
+            $table or die "No table name given in cleanup command";
+            $self->env('dbh') or die "Not connected to a DB in cleanup command";
             foreach my $v (qw(time-column cleanup-days)) {
                 $self->env($v)
                     or die "Variable '$v' not set in cleanup command";
             }
             $self->cleanup_table($table);
+        },
+        'cleanup-redis' => sub {
+            my ($self, $scan_keys) = @_;
+            $scan_keys or die "No key-pattern given in cleanup-redis command";
+            foreach my $v (qw(time-column cleanup-days cleanup-mode)) {
+                $self->env($v)
+                    or die "Variable '$v' not set in cleanup-redis command";
+            }
+            $self->env('redis') or die "Not connected to Redis in cleanup-redis command";
+            $self->cleanup_redis($scan_keys);
         },
     );
 }
@@ -590,7 +610,7 @@ sub cleanup_table {
     my $limit = $batch ? "limit $batch" : '';
     my $col = $self->env('time-column');
     my $dbh = $self->env('dbh');
-    my $cleanup_days = $self->env('cleanup_days');
+    my $cleanup_days = $self->env('cleanup-days');
     my $deleted_rows = 0;
 
     while (1) {
@@ -601,6 +621,117 @@ SQL
         last unless $aff > 0;
     }
     $self->debug("table=$table deleted rows=$deleted_rows");
+}
+
+sub cleanup_redis {
+    my ($self, $scan_keys) = @_;
+
+    $self->debug("cleanup-redis: ".$scan_keys);
+
+    my $batch = $self->env('redis-batch') // 0;
+    my $redis = $self->env('redis');
+    my $time_col = $self->env('time-column');
+    my $dbh = $self->env('dbh') // undef;
+    my $db = $self->env('own_db') // undef;
+    my $table = 'acc_backup';
+    my $cleanup_days = $self->env('cleanup-days');
+    my $cleanup_mode = $self->env('cleanup-mode');
+
+    my $deleted_rows = 0;
+
+    my $cursor = 0;
+    my $now = time;
+    my @sql_buffer;
+    my @cols = qw(method callid);
+    my $query = "";
+
+    if ($cleanup_mode eq "mysql") {
+        @cols = map { $_->[0] }
+            @{$dbh->selectall_arrayref(<<SQL, undef, $db, $table)
+SELECT column_name FROM information_schema.columns
+ WHERE table_schema = ?
+   AND table_name = ?
+   AND column_name != "id"
+ORDER BY ordinal_position ASC
+SQL
+};
+        die "Cannot select data: ".$DBI::errstr if $DBI::err;
+    }
+
+    while (1) {
+        my $res = $redis->scan($cursor, MATCH => $scan_keys, COUNT => $batch);
+        $cursor = shift @{ $res };
+        my $keys = shift @{ $res };
+
+        my $sql = "INSERT INTO $table (" . join(',', @cols) . ") VALUES ";
+
+        my %vals = ();
+        foreach my $key (@{ $keys }) {
+            my %data = $redis->hgetall($key);
+            my $data_ok = 1;
+            foreach my $c (($time_col, qw/callid method/)) {
+                unless ($data{$c}) {
+                    $self->error("missing '$c' column") ;
+                    $data_ok = 0;
+                    last;
+                }
+                if ($c eq $time_col && $data{$c} !~ /^\d+(\.\d+)?$/) {
+                    $self->error("invalid time column '$time_col' format, expected unixtime");
+                    $data_ok = 0;
+                    last;
+                }
+            }
+            last if not $data_ok;
+
+            my $time = $data{$time_col};
+
+            next if (($time + $cleanup_days*86400) > $now);
+
+            if ($cleanup_mode eq "mysql") {
+                my @query_data = map { $data{$_} } @cols;
+                $query .= "('" . join("','", @query_data) . "'),";
+            }
+
+            $vals{$key} = {
+                meth => $data{method},
+                cid  => $data{callid},
+            };
+        }
+        last unless %vals;
+
+        $sql .= substr($query, 0, -1);
+
+        my $sql_ok = $cleanup_mode eq "mysql" && $dbh->do($sql);
+
+        if ($cleanup_mode eq "delete" || $sql_ok) {
+            foreach my $key (@{ $keys }) {
+                # delete direct entry
+                $redis->del($key);
+
+                my $cid = $vals{$key}->{cid};
+                my $meth = $vals{$key}->{meth};
+
+                # delete from cid map
+                $redis->srem("acc:cid::$cid", $key);
+                # delete from meth map
+                $redis->srem("acc:meth::$meth", $key);
+            }
+        } else {
+            $self->error("insert into mysql: ".$DBI::errstr) if $DBI::err;
+            last;
+        }
+
+        $deleted_rows += $#$keys+1;
+
+        last unless $cursor;
+    }
+
+    if ($cleanup_mode eq "mysql") {
+        $self->debug("redis=$scan_keys mode=$cleanup_mode table=$db.$table moved rows=$deleted_rows");
+    } else {
+        $self->debug("redis=$scan_keys mode=$cleanup_mode deleted rows=$deleted_rows");
+    }
+    return;
 }
 
 1;
