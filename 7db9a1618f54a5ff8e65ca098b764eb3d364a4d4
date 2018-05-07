@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab451fb_d0c94cae",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-05-07T15:32:41Z",
+      "side": 1,
+      "message": "hm, does this need to be backported separately somewhere?",
+      "range": {
+        "startLine": 613,
+        "startChar": 42,
+        "endLine": 613,
+        "endChar": 43
+      },
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab451fb_d0402c0a",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-05-07T15:32:41Z",
+      "side": 1,
+      "message": "seems not used anywhere?",
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab451fb_70c15880",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-05-07T15:32:41Z",
+      "side": 1,
+      "message": "but this will only work for redis values holding a hash which corresponds to the table cols (which  isnt true for any of the redis data structures i saw so far)\n\nso allthough designed versatile, it should be used for acc redis data only, is it correct?",
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab451fb_b045a018",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-05-07T15:32:41Z",
+      "side": 1,
+      "message": "good check but is it really needed?\n\nsince possible missing fields are not checked either..",
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
