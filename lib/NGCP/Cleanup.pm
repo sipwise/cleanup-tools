@@ -589,7 +589,7 @@ sub cleanup_table {
     my $limit = $batch ? "limit $batch" : '';
     my $col = $self->env('time-column');
     my $dbh = $self->env('dbh');
-    my $cleanup_days = $self->env('cleanup_days');
+    my $cleanup_days = $self->env('cleanup-days');
     my $deleted_rows = 0;
 
     while (1) {
