@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ab451fb_5003fcb8",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-07T18:30:32Z",
+      "side": 1,
+      "message": "good point, will do!",
+      "parentUuid": "3ab451fb_d0c94cae",
+      "range": {
+        "startLine": 613,
+        "startChar": 42,
+        "endLine": 613,
+        "endChar": 43
+      },
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab451fb_d0402c0a",
         "filename": "lib/NGCP/Cleanup.pm",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-05-07T15:32:41Z",
       "side": 1,
       "message": "seems not used anywhere?",
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab451fb_300070aa",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-07T18:30:32Z",
+      "side": 1,
+      "message": "removing.",
+      "parentUuid": "3ab451fb_d0402c0a",
       "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3ab451fb_102c5449",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-07T18:30:32Z",
+      "side": 1,
+      "message": "yes, for acc redis data only, and for htables there (therefore hget*, there a also get/mget, etc. for different types of data structures).\nthere is a trick by the way. it uses \"wantarray\" approach and if you call $data \u003d $redis-\u003ehgetall() you get an arrayref, just in case if you need it that way in some of your code.",
+      "parentUuid": "3ab451fb_70c15880",
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab451fb_b045a018",
         "filename": "lib/NGCP/Cleanup.pm",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2018-05-07T15:32:41Z",
       "side": 1,
       "message": "good check but is it really needed?\n\nsince possible missing fields are not checked either..",
+      "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab451fb_f030c8a0",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-07T18:30:32Z",
+      "side": 1,
+      "message": "well, the importance of this single column is quite significant because if you mess up in the .conf file and specify for instance the \"time\" column, which is the date string, the check above passes but the $time \u003e ... comparsion below will either fail or, worse, may produce some unwanted results, hence decided to ensure that we have it as unixtime as close as possible.",
+      "parentUuid": "3ab451fb_b045a018",
       "revId": "7db9a1618f54a5ff8e65ca098b764eb3d364a4d4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
