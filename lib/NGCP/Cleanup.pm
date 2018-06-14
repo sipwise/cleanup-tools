@@ -130,7 +130,8 @@ sub init_cmds {
             $self->env('dbh') or die "Not connected to a DB in backup command";
             if ($self->env('time-column')) {
                 $self->env('time-column-mode' => 'time');
-            } elsif ($self->env('timestamp-column')) {
+            }
+	    if ($self->env('timestamp-column')) {
                 $self->env('time-column-mode' => 'timestamp');
                 $self->env('time-column' => $self->env('timestamp-column'));
             }
