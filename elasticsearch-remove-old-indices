@@ -107,8 +107,8 @@ fi
 INDICES_TEXT=$(curl -s "$ELASTICSEARCH/_status?pretty=true" | grep "$GREP" | grep -v \"index\" | sort -r | awk -F\" '{print $2}')
 
 if [ -z "$INDICES_TEXT" ]; then
-  echo "No indices returned containing '$GREP' from $ELASTICSEARCH." >&2
-  exit 1
+  echo "No indices returned containing '$GREP' from $ELASTICSEARCH."
+  exit 0
 fi
 
 # If we are logging, make sure we have a logfile TODO - handle errors here
