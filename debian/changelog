@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (5.5.5.2+0~mr5.5.5.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [1a05005] TT#38255 don't log an error if elasticsearch contains no entries
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 21 Jun 2018 13:43:44 +0200
+
 ngcp-cleanup-tools (5.5.5.1+0~mr5.5.5.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
