@@ -128,11 +128,11 @@ sub init_cmds {
             my ($self, $table) = @_;
             $table or die "No table name given in backup command";
             $self->env('dbh') or die "Not connected to a DB in backup command";
-            if ($self->env('time-column')) {
-                $self->env('time-column-mode' => 'time');
-            } elsif ($self->env('timestamp-column')) {
+            if ($self->env('timestamp-column')) {
                 $self->env('time-column-mode' => 'timestamp');
                 $self->env('time-column' => $self->env('timestamp-column'));
+            } elsif ($self->env('time-column')) {
+                $self->env('time-column-mode' => 'time');
             }
             foreach my $v (qw(time-column time-column-mode
                                            backup-months backup-retro)) {
@@ -334,7 +334,7 @@ sub update_partitions {
 
     my $dbh = $self->env('dbh');
     my $db = $self->env('own_db');
-    my $col = $self->env('timestamp-column');
+    my $col = $self->env('time-column');
     my $backup_months = $self->env('backup-months');
     my $backup_retro = $self->env('backup-retro');
     my @cols = ("min($col)", "max($col)");
@@ -414,7 +414,7 @@ sub backup_partition {
     my ($self, $table, $bm) = @_;
 
     my $dbh = $self->env('dbh');
-    my $col = $self->env('timestamp-column');
+    my $col = $self->env('time-column');
     my @cols = ("min($col)", "max($col)");
     my $mtable = $table . '_' . $bm->strftime('%Y%m');
     my $pname = 'p'.$bm->strftime('%Y%m');
