@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Sergii Kipot <skipot@sipwise.com>
+Submitted-by: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-at: Wed, 04 Jul 2018 14:53:04 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/22378
+Project: cleanup-tools
+Branch: refs/heads/mr5.5.4
