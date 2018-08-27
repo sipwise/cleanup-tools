@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (6.3.3.0+0~mr6.3.3.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [277e3e3] TT#38760 fix timestamp/time-column env
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Aug 2018 16:08:23 +0200
+
 ngcp-cleanup-tools (6.3.2.0+0~mr6.3.2.0) unstable; urgency=medium
 
   * New release.
