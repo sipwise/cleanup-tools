@@ -1,3 +1,15 @@
+ngcp-cleanup-tools (5.5.7.0+0~mr5.5.7.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [b752196] TT#38255 don't log an error if elasticsearch contains no entries
+
+  [ Kirill Solomko ]
+  * [630fee0] TT#38760 fix timestamp/time-column env
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Aug 2018 19:24:55 +0200
+
 ngcp-cleanup-tools (5.5.6.0+0~mr5.5.6.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
