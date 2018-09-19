@@ -126,49 +126,54 @@ sub init_cmds {
         },
         backup => sub {
             my ($self, $table) = @_;
-            $table or die "No table name given in backup command";
-            $self->env('dbh') or die "Not connected to a DB in backup command";
+            $table or die "No table name provided in the 'backup' command";
+            $self->env('dbh') or die "Not connected to a DB in the 'backup' command";
             if ($self->env('timestamp-column')) {
                 $self->env('time-column-mode' => 'timestamp');
                 $self->env('time-column' => $self->env('timestamp-column'));
             } elsif ($self->env('time-column')) {
                 $self->env('time-column-mode' => 'time');
             }
-            foreach my $v (qw(time-column time-column-mode
-                                           backup-months backup-retro)) {
+            foreach my $v (qw(time-column time-column-mode keep-months)) {
                 $self->env($v)
-                    or die "Variable '$v' not set in backup command";
+                    or die "Variable '$v' is not set in the 'backup' command";
             }
+            # deprecated commands, config upgrade is mandatory
+            $self->env('backup-months') and
+                die "backup-months is deprecated and replaced by keep-months, please upgrade or adjust the respective config file\n";
+            $self->env('retro-months') and
+                die "retro-months is deprecated and removed, plase upgarde or adjust the respective config file\n";
+            #
             $self->backup_table($table);
         },
         archive => sub {
             my ($self, $table) = @_;
-            $table or die "No table name given in archive command";
-            $self->env('dbh') or die "Not connected to a DB in archive command";
+            $table or die "No table name provided in the 'archive' command";
+            $self->env('dbh') or die "Not connected to a DB in the 'archive' command";
             foreach my $v (qw(archive-months archive-target)) {
                 $self->env($v)
-                    or die "Variable '$v' not set in archive command";
+                    or die "Variable '$v' is not set in the 'archive' command";
             }
             $self->archive_dump($table);
         },
         cleanup => sub {
             my ($self, $table) = @_;
-            $table or die "No table name given in cleanup command";
-            $self->env('dbh') or die "Not connected to a DB in cleanup command";
+            $table or die "No table name provided in the 'cleanup' command";
+            $self->env('dbh') or die "Not connected to a DB in the 'cleanup' command";
             foreach my $v (qw(time-column cleanup-days)) {
                 $self->env($v)
-                    or die "Variable '$v' not set in cleanup command";
+                    or die "Variable '$v' is not set in the 'cleanup' command";
             }
             $self->cleanup_table($table);
         },
         'cleanup-redis' => sub {
             my ($self, $scan_keys) = @_;
-            $scan_keys or die "No key-pattern given in cleanup-redis command";
+            $scan_keys or die "No key-pattern provided in the 'cleanup-redis' command";
             foreach my $v (qw(time-column cleanup-days cleanup-mode)) {
                 $self->env($v)
-                    or die "Variable '$v' not set in cleanup-redis command";
+                    or die "Variable '$v' is not set in the 'cleanup-redis' command";
             }
-            $self->env('redis') or die "Not connected to Redis in cleanup-redis command";
+            $self->env('redis') or die "Not connected to Redis in the 'cleanup-redis' command";
             $self->cleanup_redis($scan_keys);
         },
     );
@@ -178,7 +183,7 @@ sub init_config {
     my ($self, $config_file) = @_;
 
     open(my $config_fh, '<', $config_file)
-        or die "Couldn't open the configuration file '$config_file'.\n";
+        or die "Couldn't open configuration file '$config_file'.\n";
 
     while (my $line = <$config_fh>) {
         $line =~ s/^\s*//s;
@@ -334,25 +339,23 @@ sub update_partitions {
 
     my $dbh = $self->env('dbh');
     my $db = $self->env('own_db');
+    my $keep_months = $self->env('keep-months');
     my $col = $self->env('time-column');
-    my $backup_months = $self->env('backup-months');
-    my $backup_retro = $self->env('backup-retro');
     my @cols = ("min($col)", "max($col)");
     my ($min_ts, $max_ts) = $self->fetch_row(undef, $table, join(',', @cols));
 
-    unless ($min_ts) {
-        #$self->debug("table=$table: empty, nothing to partition");
-        return unless $min_ts;
-    }
+    return unless $min_ts;
 
-    my $dt_min = DateTime->now(time_zone => 'local');
-    $dt_min->subtract(months => $backup_months + $backup_retro-1)->truncate(to => 'month');
-    my $dt_max = DateTime->now(time_zone => 'local', epoch => $max_ts);
-    $dt_max->add(months => 1)->truncate(to => 'month'); # extra month
-    my $months = ($dt_max - $dt_min)->months;
+    my $dt_min = DateTime->now(epoch => $min_ts, time_zone => 'local');
+    $dt_min->truncate(to => "month");
+    my $dt_max = DateTime->now(epoch => $max_ts, time_zone => 'local');
+    $dt_max->add(months => 1);
+    $dt_max->truncate(to => 'month');
+    my $dt_diff = $dt_max-$dt_min;
+    my $months = $dt_diff->years*12+$dt_diff->months;
 
     $self->debug(sprintf "table=%s checking start=%s end=%s",
-        $table, $dt_min->strftime('%Y-%m-%d'), $dt_max->strftime('%Y-%m-%d'));
+        $table, $dt_min->strftime('%Y-%m'), $dt_max->strftime('%Y-%m'));
 
     if ($months >= $MAX_PARTITIONS) {
         die sprintf "%s%s",
@@ -365,7 +368,6 @@ sub update_partitions {
         my $mpart = 'pmax';
         my $mdt   = $dt_max->clone;
         my $gap   = 0;
-        my $diff  = ($dt_max - $dt_min)->months;
         my $all_parts = $dbh->selectall_hashref(<<SQL, 'partition_name');
 SELECT partition_name, partition_description as value
   FROM information_schema.partitions
@@ -374,7 +376,7 @@ SELECT partition_name, partition_description as value
 SQL
         die "Cannot select partitions: ".$DBI::errstr if $DBI::err;
         delete $all_parts->{pmax};
-        while ($diff >= 0) {
+        while ($dt_max >= $dt_min) {
             my $pname = $dt_max->strftime('p%Y%m');
             unless ($self->check_partition_exists($table, $pname)) {
                 $gap++;
@@ -388,14 +390,12 @@ SQL
                 delete $all_parts->{$pname};
             }
             $dt_max->subtract(months => 1);
-            last unless $diff;
-            $diff = ($dt_max - $dt_min)->months;
         }
         if ($gap) {
             $self->reorganize_partitions($table, $mpart, $mdt, $gap);
         }
-        # drop existing obsolete and unused partitions
-        foreach my $part (keys %{$all_parts}) {
+        # drop existing deprecated and unused partitions
+        foreach my $part (sort { $a cmp $b } keys %{$all_parts}) {
             my $pdt = DateTime->now(time_zone => 'local',
                                     epoch => $all_parts->{$part}->{value});
             # drop partitions older than the possible min
@@ -418,8 +418,6 @@ sub backup_partition {
     my @cols = ("min($col)", "max($col)");
     my $mtable = $table . '_' . $bm->strftime('%Y%m');
     my $pname = 'p'.$bm->strftime('%Y%m');
-    my ($min_ts, $max_ts) = $self->fetch_row(undef, $table, join(',', @cols));
-        return unless $min_ts; # empty table
 
     $self->debug("checking table=$table pname=$pname");
 
@@ -583,19 +581,31 @@ sub backup_table {
         $self->update_partitions($table);
     }
 
-    my $backup_months = $self->env('backup-months');
-    my $backup_retro = $self->env('backup-retro');
+    my $data_moved = 0;;
+    my $keep_months = $self->env('keep-months');
+    my $col = $self->env('time-column');
+    my @cols = ("min($col)", "max($col)");
+    my ($min_ts, $max_ts) = $self->fetch_row(undef, $table, join(',', @cols));
+    return unless $min_ts;
 
-    for my $cmonth (0 .. ($backup_retro - 1)) {
-        my $tmonths = $cmonth + $backup_months;
-        my $now = DateTime->now(time_zone => 'local');
-        my $bm = $now->clone;
-        $bm->subtract(months => $tmonths)->truncate(to => 'month');
+    my $dt_min = DateTime->now(epoch => $min_ts, time_zone => 'local');
+    $dt_min->truncate(to => "month");
+    my $dt_max = DateTime->now(time_zone => 'local');
+    $dt_max->truncate(to => "month");
+    $dt_max->subtract(months => $keep_months);
+
+    while ($dt_min <= $dt_max) {
         if ($use_part eq 'yes') {
-            $self->backup_partition($table, $bm);
+            $self->backup_partition($table, $dt_min);
         } else {
-            $self->delete_loop($table, $bm);
+            $self->delete_loop($table, $dt_min);
         }
+        $dt_min->add(months => 1);
+        $data_moved = 1;
+    }
+
+    if ($use_part eq 'yes' && $data_moved) {
+        $self->update_partitions($table);
     }
 
     return 1;
