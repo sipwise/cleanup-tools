@@ -180,6 +180,30 @@
       "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_3bba95e2",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-09-20T09:32:51Z",
+      "side": 1,
+      "message": "the approach is simple here.\n\nwe get $dt_max (now), trim it to year/month\u0027, so it looks like \u00272018-09-01 00:00:00\u0027, and then explicitly subtract the $keep_months value.\n\nso say. if $keep_months \u003d 2, then $dt_max will be always pointing to 2018-07 if we run it at any time in 2018-09.",
+      "parentUuid": "9af37de9_bb20c54a",
+      "range": {
+        "startLine": 597,
+        "startChar": 20,
+        "endLine": 597,
+        "endChar": 21
+      },
+      "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
