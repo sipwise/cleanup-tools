@@ -228,6 +228,30 @@
       "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_9b92a156",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-09-20T09:44:04Z",
+      "side": 1,
+      "message": "there is always, +1 month partition as well a pmax for +2-\u003einfinite.\nkeep-months is currently not possible to set to 0, you will otherwise get \nERROR error: Variable \u0027keep-months\u0027 is not set in the \u0027backup\u0027 command at /usr/share/perl5/NGCP/Cleanup.pm line 138.\ngonna retain the behaviour for now.\n\nas for additional scenarios: I wrote it as the first comment that I was going to perform additional tests today.",
+      "parentUuid": "9af37de9_5bc55959",
+      "range": {
+        "startLine": 597,
+        "startChar": 20,
+        "endLine": 597,
+        "endChar": 21
+      },
+      "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
