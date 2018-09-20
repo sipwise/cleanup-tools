@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_fbdc0d48",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-09-20T09:30:09Z",
+      "side": 1,
+      "message": "they essentially do exactly the same, even though date comparsions are slower than a scalar it is easier to read the code + the speed degrade for such compassion is not crucial here at all.",
+      "parentUuid": "9af37de9_5be4393a",
+      "range": {
+        "startLine": 379,
+        "startChar": 33,
+        "endLine": 379,
+        "endChar": 34
+      },
+      "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_3bd05553",
         "filename": "lib/NGCP/Cleanup.pm",
         "patchSetId": 2
@@ -88,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_7b1a5d19",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-09-20T09:30:09Z",
+      "side": 1,
+      "message": "yes, good idea.",
+      "parentUuid": "9af37de9_9bc18183",
+      "range": {
+        "startLine": 447,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 15
+      },
+      "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_9b6f4192",
         "filename": "lib/NGCP/Cleanup.pm",
         "patchSetId": 2
@@ -99,6 +147,30 @@
       "writtenOn": "2018-09-20T09:22:00Z",
       "side": 1,
       "message": "not sure about this",
+      "range": {
+        "startLine": 597,
+        "startChar": 20,
+        "endLine": 597,
+        "endChar": 21
+      },
+      "revId": "eb6664886d6841bf0165711854db914a4fca2dbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_bb20c54a",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-09-20T09:30:09Z",
+      "side": 1,
+      "message": "I am, because I have tested it in multiple scenarios :)",
+      "parentUuid": "9af37de9_9b6f4192",
       "range": {
         "startLine": 597,
         "startChar": 20,
