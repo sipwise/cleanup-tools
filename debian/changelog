@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [eb66648] TT#43164 backup-months, retro-months changes
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Sep 2018 18:51:46 +0200
+
 ngcp-cleanup-tools (6.5.0.0+0~mr6.5.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
