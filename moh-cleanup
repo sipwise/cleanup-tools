@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# removes all music-on-hold cache files older than 24h
-
-find /var/spool/ngcp/moh/ -type f -ctime 1 -exec rm {} \;
