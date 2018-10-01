@@ -1,1 +1,1 @@
-ngcp-cleanup-tools-ce: non-standard-dir-in-var var/backup/
+ngcp-cleanup-tools-ce: non-standard-dir-in-var ngcp-data/backup/
