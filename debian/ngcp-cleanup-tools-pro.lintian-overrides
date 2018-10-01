@@ -1,1 +1,1 @@
-ngcp-cleanup-tools-pro: non-standard-dir-in-var var/backup/
+ngcp-cleanup-tools-pro: non-standard-toplevel-dir ngcp-data/
