@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_4081d849",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-10-04T00:20:52Z",
+      "side": 1,
+      "message": "my $months \u003d ($dt_max - $dt_min)-\u003eyears*12 + ($dt_max - $dt_min)-\u003emonths;",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 45
+      },
+      "revId": "2fe9fcd68b7ed17db6e65fc0fa7fbd0d8b09768f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_2097f491",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-10-04T00:20:52Z",
+      "side": 1,
+      "message": "my $diff  \u003d ($dt_max - $dt_min)-\u003eyears*12 + ($dt_max - $dt_min)-\u003emonths;",
+      "range": {
+        "startLine": 348,
+        "startChar": 8,
+        "endLine": 348,
+        "endChar": 48
+      },
+      "revId": "2fe9fcd68b7ed17db6e65fc0fa7fbd0d8b09768f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_0094f088",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-10-04T00:20:52Z",
+      "side": 1,
+      "message": "$diff \u003d ($dt_max - $dt_min)-\u003eyears*12 + ($dt_max - $dt_min)-\u003emonths;",
+      "range": {
+        "startLine": 372,
+        "startChar": 12,
+        "endLine": 372,
+        "endChar": 48
+      },
+      "revId": "2fe9fcd68b7ed17db6e65fc0fa7fbd0d8b09768f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
