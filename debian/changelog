@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (6.5.1.1+0~mr6.5.1.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [4aacefc] TT#44827 Remove /usr/sbin/moh-cleanup from NGCP (not in use since mr5.5)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Oct 2018 21:14:24 +0200
+
 ngcp-cleanup-tools (6.5.1.0+0~mr6.5.1.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
