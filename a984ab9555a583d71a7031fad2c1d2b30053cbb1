@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Mykola Malkov <mmalkov@sipwise.com>
+Submitted-by: Alexander Lutay <alutay@sipwise.com>
+Submitted-at: Wed, 31 Oct 2018 13:25:35 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/24508
+Project: cleanup-tools
+Branch: refs/heads/mr6.5.1
