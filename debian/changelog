@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (6.5.1.2+0~mr6.5.1.2) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [a984ab9] TT#44825 Move '/var/backup/' to '/ngcp-data/backup/'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 31 Oct 2018 13:25:46 +0100
+
 ngcp-cleanup-tools (6.5.1.1+0~mr6.5.1.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
