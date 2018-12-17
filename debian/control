@@ -15,7 +15,10 @@ Architecture: all
 Depends:
  libconfig-any-perl,
  libdatetime-perl,
+ libdbd-mysql-perl,
  libdbi-perl,
+ liblog-log4perl-perl,
+ libredis-perl,
  ${misc:Depends},
  ${perl:Depends},
 Conflicts:
@@ -33,7 +36,9 @@ Architecture: all
 Depends:
  libconfig-any-perl,
  libdatetime-perl,
+ libdbd-mysql-perl,
  libdbi-perl,
+ liblog-log4perl-perl,
  libredis-perl,
  ${misc:Depends},
  ${perl:Depends},
