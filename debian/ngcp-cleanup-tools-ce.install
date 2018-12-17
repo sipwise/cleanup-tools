@@ -1,4 +1,4 @@
-acc-cleanup.conf etc/ngcp-cleanup-tools/
-acc-cleanup.pl   usr/sbin/
-cleanup-old-cdr-files.pl   usr/sbin/
-usr/share/perl5/NGCP/Cleanup.pm  usr/share/perl5/NGCP/
+acc-cleanup.conf                  etc/ngcp-cleanup-tools/
+ngcp-cleanup-acc                  usr/sbin/
+ngcp-cleanup-cdr-files            usr/sbin/
+usr/share/perl5/NGCP/Cleanup.pm   usr/share/perl5/NGCP/
