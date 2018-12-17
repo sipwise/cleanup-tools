@@ -46,6 +46,30 @@
       "revId": "9d1f92164d92b18424c241d896a5501d9f5384ab",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_f222e2b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-12-17T12:14:48Z",
+      "side": 1,
+      "message": "\u003e I like confused, because to me it presents itself with a neutral\n \u003e tone, w/o discarding any meaning, while talking exclusively about\n \u003e the object or argument and not a person. :D\n\nOK :)",
+      "parentUuid": "1adf8d57_f25b0253",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "9d1f92164d92b18424c241d896a5501d9f5384ab",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
