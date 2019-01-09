@@ -1,3 +1,20 @@
+ngcp-cleanup-tools (7.1.1.0+0~mr7.1.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [e735591] TT#43810 Execute 'wrap-and-sort -sat' as suggested by check-packaging
+
+  [ Guillem Jover ]
+  * [10ed09e] TT#49150 Remove obsolete binlog-purge.pl program
+  * [e1ce04d] TT#49150 Namespace program names with ngcp-
+  * [72427c8] TT#49150 Remove executable bits from perl module
+  * [f6249ec] TT#49150 Add missing perl module dependencies
+  * [9d1f921] TT#49150 Remove confused README
+  * [1fbb57e] TT#49150 Unify copyright declaration
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 09 Jan 2019 21:54:55 +0100
+
 ngcp-cleanup-tools (7.1.0.0+0~mr7.1.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
