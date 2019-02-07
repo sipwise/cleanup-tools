@@ -329,7 +329,7 @@ sub update_partitions {
     $dt_min->subtract(months => $backup_months + $backup_retro-1)->truncate(to => 'month');
     my $dt_max = DateTime->now(time_zone => 'local', epoch => $max_ts);
     $dt_max->add(months => 1)->truncate(to => 'month'); # extra month
-    my $months = ($dt_max-$dt_min)->years*12+($dt_max-$dt_min)->months;
+    my $months = (($dt_max-$dt_min)->years*12+($dt_max-$dt_min)->months) * (($dt_max-$dt_min)->is_negative() ? -1 : 1);
 
     $self->debug(sprintf "table=%s checking start=%s end=%s",
         $table, $dt_min->strftime('%Y-%m-%d'), $dt_max->strftime('%Y-%m-%d'));
@@ -345,7 +345,7 @@ sub update_partitions {
         my $mpart = 'pmax';
         my $mdt   = $dt_max->clone;
         my $gap   = 0;
-        my $diff  = ($dt_max-$dt_min)->years*12+($dt_max-$dt_min)->months;
+        my $diff  = (($dt_max-$dt_min)->years*12+($dt_max-$dt_min)->months) * (($dt_max-$dt_min)->is_negative() ? -1 : 1);
         my $all_parts = $dbh->selectall_hashref(<<SQL, 'partition_name');
 SELECT partition_name, partition_description as value
   FROM information_schema.partitions
@@ -369,7 +369,7 @@ SQL
             }
             $dt_max->subtract(months => 1);
             last unless $diff;
-            $diff = ($dt_max-$dt_min)->years*12+($dt_max-$dt_min)->months;
+            $diff = (($dt_max-$dt_min)->years*12+($dt_max-$dt_min)->months) * (($dt_max-$dt_min)->is_negative() ? -1 : 1);
         }
         if ($gap) {
             $self->reorganize_partitions($table, $mpart, $mdt, $gap);
