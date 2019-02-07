@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_cbaf3393",
+        "filename": "lib/NGCP/Cleanup.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-02-07T13:51:44Z",
+      "side": 1,
+      "message": "add \n\nif ($months \u003c 0) {\n    die sprintf(\"max partition date: \u0027%s\u0027 is less than Min partition date: \u0027%s\\n\u0027\", $dt_max, $dt_min);\n}",
+      "revId": "75289d97456a7dc40ed2d64cb7f5b557d6ccabb9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
