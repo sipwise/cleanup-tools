@@ -352,15 +352,15 @@ sub update_partitions {
     $dt_max->add(months => 1);
     $dt_max->truncate(to => 'month');
     my $dt_diff = $dt_max-$dt_min;
-    my $months = $dt_diff->years*12+$dt_diff->months;
+    my $months = ($dt_diff->years*12+$dt_diff->months) * (($dt_diff)->is_negative() ? -1 : 1);
 
     $self->debug(sprintf "table=%s checking start=%s end=%s",
         $table, $dt_min->strftime('%Y-%m'), $dt_max->strftime('%Y-%m'));
 
     if ($months >= $MAX_PARTITIONS) {
         die sprintf "%s%s",
-            "Cannot update partitions for table=$table,",
-            "the gap between min/max record is too large (more than 24 months).";
+            "Cannot update partitions for table=$table, ",
+            "the gap between max record time and min record time is too large (more than 24 months).";
     }
 
     if ($self->check_partition_exists($table, 'pmax')) { # already partitionined
