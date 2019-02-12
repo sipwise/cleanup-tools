@@ -1,3 +1,12 @@
+ngcp-cleanup-tools (5.5.9.0+0~mr5.5.9.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [c58bf4e] TT#52359 consider negative DateTime::Duration
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Feb 2019 18:25:07 +0100
+
 ngcp-cleanup-tools (5.5.8.0+0~mr5.5.8.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
