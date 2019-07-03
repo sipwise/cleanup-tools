@@ -1,7 +1,7 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Source: https://github.com/sipwise/cleanup-tools
 Upstream-Name: cleanup-tools
 Upstream-Contact: Sipwise Development Team <support@sipwise.com>
-Source: https://github.com/sipwise/cleanup-tools
 
 Files: *
 Copyright: 2007-2017 Sipwise GmbH, Austria
