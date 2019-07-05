@@ -5,7 +5,7 @@ use warnings;
 use Redis;
 
 my $max_days = 2;
-my $monit_restart = 1;
+my $service_restart = 1;
 
 lprint("=====================");
 lprint("script start");
@@ -54,8 +54,8 @@ for my $key (@{$keys}) {
 
 if ($cleaned) {
 	lprint("cleaned $cleaned calls");
-	if ($monit_restart) {
-		system("monit restart sbc");
+	if ($service_restart) {
+		system qw(ngcp-service restart sems);
 		lprint("sems restarted");
 	}
 }
