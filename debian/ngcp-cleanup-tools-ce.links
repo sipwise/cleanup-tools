@@ -1,2 +1,0 @@
-usr/sbin/ngcp-cleanup-acc		usr/sbin/acc-cleanup.pl
-usr/sbin/ngcp-cleanup-cdr-files		usr/sbin/cleanup-old-cdr-files.pl
