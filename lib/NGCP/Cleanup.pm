@@ -578,7 +578,11 @@ sub backup_table {
 
     my $use_part = $self->env('use-partitioning') // 'no';
     if ($use_part eq 'yes') {
-        $self->update_partitions($table);
+        eval { $self->update_partitions($table) };
+        if ($EVAL_ERROR) {
+            $self->debug("table=$table cannot be used for partitioning, falling back to sql backups");
+            $use_part = 'no';
+        }
     }
 
     my $data_moved = 0;;
