@@ -1,3 +1,13 @@
+ngcp-cleanup-tools (5.5.9.2+0~mr5.5.9.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [17bf069] TT#64406 fix changing epoch/date column mode for 'cleanup'
+  * [2b786aa] TT#64406 fix changing epoch/date column mode for 'cleanup'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 06 Aug 2019 14:44:11 +0200
+
 ngcp-cleanup-tools (5.5.9.1+0~mr5.5.9.1) unstable; urgency=medium
 
   * New release.
