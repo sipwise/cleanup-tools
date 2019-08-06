@@ -160,7 +160,13 @@ sub init_cmds {
             my ($self, $table) = @_;
             $table or die "No table name provided in the 'cleanup' command";
             $self->env('dbh') or die "Not connected to a DB in the 'cleanup' command";
-            foreach my $v (qw(time-column cleanup-days)) {
+            if ($self->env('timestamp-column')) {
+                $self->env('time-column-mode' => 'timestamp');
+                $self->env('time-column' => $self->env('timestamp-column'));
+            } elsif ($self->env('time-column')) {
+                $self->env('time-column-mode' => 'time');
+            }
+            foreach my $v (qw(time-column time-column-mode cleanup-days)) {
                 $self->env($v)
                     or die "Variable '$v' is not set in the 'cleanup' command";
             }
@@ -197,6 +203,9 @@ sub init_config {
                 last;
             }
             $env{$1} = $2;
+            if ($1 eq "time-column") {
+                $env{"timestamp-column"} = undef;
+            }
             next;
         }
 
@@ -578,11 +587,7 @@ sub backup_table {
 
     my $use_part = $self->env('use-partitioning') // 'no';
     if ($use_part eq 'yes') {
-        eval { $self->update_partitions($table) };
-        if ($EVAL_ERROR) {
-            $self->debug("table=$table cannot be used for partitioning, falling back to sql backups");
-            $use_part = 'no';
-        }
+        $self->update_partitions($table);
     }
 
     my $data_moved = 0;;
@@ -623,14 +628,23 @@ sub cleanup_table {
     my $batch = $self->env('batch') // 0;
     my $limit = $batch ? "limit $batch" : '';
     my $col = $self->env('time-column');
+    my $col_mode = $self->env('time-column-mode');
     my $dbh = $self->env('dbh');
     my $cleanup_days = $self->env('cleanup-days');
     my $deleted_rows = 0;
 
+    UNIX_TIMESTAMP(?
     while (1) {
-        my $aff = $dbh->do(<<SQL, undef, $cleanup_days);
+        my $aff;
+        if ($col_mode eq "time") {
+            $aff = $dbh->do(<<SQL, undef, $cleanup_days);
 DELETE FROM $table WHERE $col < date(date_sub(now(), interval ? day)) $limit
 SQL
+        } else {
+            $aff = $dbh->do(<<SQL, undef, $cleanup_days);
+DELETE FROM $table WHERE $col < unix_timestamp(date(date_sub(now(), interval ? day))) $limit
+SQL
+        }
         $deleted_rows += $aff;
         last unless $aff > 0;
     }
