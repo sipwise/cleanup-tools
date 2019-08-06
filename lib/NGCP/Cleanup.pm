@@ -151,7 +151,7 @@ sub init_cmds {
             } elsif ($self->env('time-column')) {
                 $self->env('time-column-mode' => 'time');
             }
-            foreach my $v (qw(time-column cleanup-days)) {
+            foreach my $v (qw(time-column time-column-mode cleanup-days)) {
                 $self->env($v)
                     or die "Variable '$v' not set in cleanup command";
             }
