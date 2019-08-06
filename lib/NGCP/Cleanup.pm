@@ -145,6 +145,12 @@ sub init_cmds {
             my ($self, $table) = @_;
             $table or die "No table name given in backup command";
             $self->env('dbh') or die "Not connected to a DB in archive command";
+            if ($self->env('timestamp-column')) {
+                $self->env('time-column-mode' => 'timestamp');
+                $self->env('time-column' => $self->env('timestamp-column'));
+            } elsif ($self->env('time-column')) {
+                $self->env('time-column-mode' => 'time');
+            }
             foreach my $v (qw(time-column cleanup-days)) {
                 $self->env($v)
                     or die "Variable '$v' not set in cleanup command";
@@ -172,6 +178,11 @@ sub init_config {
                 last;
             }
             $env{$1} = $2;
+            if ($1 eq "time-column") {
+                $env{"timestamp-column"} = undef;
+            } elsif ($1 eq "timestamp-column") {
+                $env{"time-column"} = undef;
+            }
             next;
         }
 
@@ -592,14 +603,22 @@ sub cleanup_table {
     my $batch = $self->env('batch') // 0;
     my $limit = $batch ? "limit $batch" : '';
     my $col = $self->env('time-column');
+    my $col_mode = $self->env('time-column-mode');
     my $dbh = $self->env('dbh');
     my $cleanup_days = $self->env('cleanup-days');
     my $deleted_rows = 0;
 
     while (1) {
-        my $aff = $dbh->do(<<SQL, undef, $cleanup_days);
+        my $aff;
+        if ($col_mode eq "time") {
+            $aff = $dbh->do(<<SQL, undef, $cleanup_days);
 DELETE FROM $table WHERE $col < date(date_sub(now(), interval ? day)) $limit
 SQL
+        } else {
+            $aff = $dbh->do(<<SQL, undef, $cleanup_days);
+DELETE FROM $table WHERE $col < unix_timestamp(date(date_sub(now(), interval ? day))) $limit
+SQL
+        }
         $deleted_rows += $aff;
         last unless $aff > 0;
     }
