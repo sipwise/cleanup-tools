@@ -106,8 +106,8 @@ sub init_cmds {
         connect => sub {
             my ($self, $db) = @_;
             my $host = $self->env('host');
-            my $user = $self->env('user');
-            my $pass = $self->env('pass');
+            my $user = $self->env('user') // $self->env('username');
+            my $pass = $self->env('pass') // $self->env('password');
             my $dbi = "dbi:mysql:$db;host=$host";
             my $dbh = DBI->connect($dbi, $user, $pass,
                 { PrintError => 0, mysql_auto_reconnect => 1 })
@@ -542,8 +542,8 @@ sub archive_dump {
     my $month = $self->env('archive-months');
     my $target = $self->env('archive-target');
     my $compress = $self->env('compress');
-    my $user = $self->env('username');
-    my $pass = $self->env('password');
+    my $user = $self->env('user') // $self->env('username');
+    my $pass = $self->env('pass') // $self->env('password');
     my $host = $self->env('host');
 
     while (1) {
