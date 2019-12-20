@@ -5,3 +5,7 @@
 
 %:
 	dh $@
+
+override_dh_auto_fixperms:
+	dh_auto_fixperms
+	chmod -v 0700 ngcp-data/backup/cdr
