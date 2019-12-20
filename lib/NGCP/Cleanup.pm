@@ -741,9 +741,9 @@ SQL
                 my $meth = $vals{$key}->{meth};
 
                 # delete from cid map
-                $redis->srem("acc:cid::$cid", $key);
+                $redis->srem("acc:cid::$cid", $key) if defined $cid;
                 # delete from meth map
-                $redis->srem("acc:meth::$meth", $key);
+                $redis->srem("acc:meth::$meth", $key) if defined $meth;
             }
         } else {
             $self->error("insert into mysql: ".$DBI::errstr) if $DBI::err;
