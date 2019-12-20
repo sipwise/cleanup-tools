@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (7.5.2.2+0~mr7.5.2.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [bb4c5c5] TT#33651 suppress warnings about undefined values
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 20 Dec 2019 20:41:56 +0100
+
 ngcp-cleanup-tools (7.5.2.1+0~mr7.5.2.1) unstable; urgency=medium
 
   * New release.
