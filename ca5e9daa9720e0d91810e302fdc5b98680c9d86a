@@ -16,6 +16,24 @@
       "revId": "ca5e9daa9720e0d91810e302fdc5b98680c9d86a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca85b829_d096f07e",
+        "filename": "debian/rules",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-20T21:54:53Z",
+      "side": 1,
+      "message": "\u003e This needs to be on the installed paths as in debian/ngcp-something/ngcp-data/backup/cdr. Assuming we ship that dir at all here?\n\nYeah, we do, it\u0027s in .dirs.",
+      "parentUuid": "266efb14_7c49f1d2",
+      "revId": "ca5e9daa9720e0d91810e302fdc5b98680c9d86a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
