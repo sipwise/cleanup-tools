@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (6.5.7.3+0~mr6.5.7.3) unstable; urgency=medium
+
+  [ Manuel Montecelo ]
+  * [e25b854] TT#72908 Change permissions of /ngcp-data/backup/cdr to 0700
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 Dec 2019 16:41:01 +0100
+
 ngcp-cleanup-tools (6.5.7.2+0~mr6.5.7.2) unstable; urgency=medium
 
   [ Richard Fuchs ]
