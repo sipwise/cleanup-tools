@@ -1,3 +1,13 @@
+ngcp-cleanup-tools (6.5.8.1+0~mr6.5.8.1) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [8bdd142] TT#33651 suppress warnings about undefined values
+
+  [ Manuel Montecelo ]
+  * [cc5ac87] TT#72908 Change permissions of /ngcp-data/backup/cdr to 0700
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 11 Mar 2020 09:12:08 +0100
+
 ngcp-cleanup-tools (6.5.8.0+0~mr6.5.8.0) unstable; urgency=medium
 
   * New release.
