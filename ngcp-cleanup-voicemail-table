@@ -1,0 +1,105 @@
+#!/bin/bash
+
+# This script cleans up voicemail records on a monthly basis. It is disabled by default.
+# Parameters can be found under the asterisk.voicemail.cleanup section of config.yml.
+# /etc/cron.d/cleanup-tools is configured to start the script every 14th day of month.
+
+set -eu
+
+# Defining some global variables
+PID_FILE='/var/lock/voicemail-cleanup.pid'
+PWD_FILE='/etc/mysql/sipwise_extra.cnf'
+CFG_FILE='/etc/ngcp-cleanup-tools/voicemail-table-cleanup.conf'
+MYSQL="$(which mysql)"
+QUERY_COUNT=1
+
+#Duplicating output to logs
+LOG_FILE='/var/log/ngcp/voicemail-cleanup.log'
+exec  > >(tee -a "${LOG_FILE}"    )
+exec 2> >(tee -a "${LOG_FILE}" >&2)
+
+my_exit() {
+   # remove the PID file when the script finishes:
+   rm -f "${PID_FILE}"
+   echo " $(date): Removed the lock file ${PID_FILE}"
+   exit "$1"
+}
+
+echo " $(date): Starting the new process"
+
+if [ -e "${PID_FILE}" ] ; then
+  echo "ERROR: The lock file exists." >&2
+  echo "The previous instance has not exited correctly or still running? Exiting!" >&2
+  exit 1
+fi
+
+# creating a PID file, otherwise exiting with error:
+if ! touch "${PID_FILE}" ; then
+  echo "Could not create the lock file. Exiting!" >&2
+  exit 1
+fi
+echo "Created the lock file ${PID_FILE}"
+
+# Checking the availability of the MySQL credentials.
+if [ ! -r "${PWD_FILE}"  ] ; then
+  echo "ERROR: Cannot read the credentials file. Exiting!" >&2
+  my_exit 1
+fi
+
+# Reading the config file
+if [ ! -r "${CFG_FILE}" ] ; then
+   echo "ERROR: Can not read the configuration file" >&2
+   my_exit 1
+fi
+   source "${CFG_FILE}"
+
+# Defining MySQL client connection parameters
+OPTS=(--defaults-extra-file="${PWD_FILE}" -h"${MY_DBHOST}" -s -N -e)
+
+echo "Using the following parameters:"
+echo "Days to keep voice mails: ${KEEP_DAYS}"
+echo "Query limit: ${QUERY_LIMIT}"
+echo "Sleep between queries: ${SLEEP_SEC}"
+
+# Finding the lowest primary key (id field) which will be kept.
+# This will speed up the DELETE query as it will not perform any time operations
+START_ID=$(timeout 600 "${MYSQL}" "${OPTS[@]}" "select MIN(id) from kamailio.voicemail_spool \
+                          where origtime > DATE_SUB(NOW(), INTERVAL ${KEEP_DAYS} DAY);") || true
+
+# Checking that we've got a number and not NULL or some SQL error in the output
+if [[ "$START_ID" =~ ^[0-9]+$ ]] ; then
+   echo "Deleting IDs lower than: ${START_ID}"
+   while true ; do # Removing voicemails with IDs lower (older) than START_ID in chunks
+      DELETED_ROWS=$(timeout 600 "${MYSQL}" "${OPTS[@]}" "DELETE from kamailio.voicemail_spool \
+                       where id < ${START_ID} \
+                       limit ${QUERY_LIMIT};  SELECT ROW_COUNT();") || true
+
+      # Checking if we have got a value, otherwise exiting
+      if [ -z "$DELETED_ROWS" ] ; then
+         echo "ERROR! Exiting due to the above error." >&2
+         my_exit 1
+      fi
+
+      # Checking that we've got a number and not NULL or some SQL error in the output
+      if ! [[ "$DELETED_ROWS" =~ ^[0-9]+$ ]] ; then
+         echo "ERROR: Got an SQL error:" >&2
+         echo "${DELETED_ROWS}" >&2
+         echo " Voicemails were NOT removed. Exiting..." >&2
+         my_exit 1
+      elif [[ "$DELETED_ROWS" -eq 0 ]] ; then
+         echo "No more voicemails to delete."
+         echo "Made $(( QUERY_COUNT - 1 )) effective queries, exiting..."
+         my_exit 0
+      else
+         echo "Made ${QUERY_COUNT} queries. Deleted ${DELETED_ROWS} voice mails. Sleeping..."
+         QUERY_COUNT=$(( QUERY_COUNT + 1 ))
+      fi
+      sleep "${SLEEP_SEC}"
+   done
+elif [[ "$START_ID" = "NULL" ]] ; then #Checking NULL that mostly means no voicemails found to keep, then stop
+   echo "No voicemails found in the configured \"keep\" period, exiting..."
+   my_exit 0
+else
+   echo "ERROR: Failed to get the starting record ID from the DB. Exiting." >&2
+   my_exit 1
+fi

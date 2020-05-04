@@ -1,4 +1,5 @@
 acc-cleanup.conf                  etc/ngcp-cleanup-tools/
 ngcp-cleanup-acc                  usr/sbin/
 ngcp-cleanup-cdr-files            usr/sbin/
+ngcp-cleanup-voicemail-table      usr/sbin/
 usr/share/perl5/NGCP/Cleanup.pm   usr/share/perl5/NGCP/
