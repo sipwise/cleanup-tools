@@ -28,6 +28,7 @@ Provides:
  ngcp-cleanup-tools,
 Replaces:
  ngcp-cleanup-tools,
+ ngcp-system-tools-ce (<< 8.5.0.0),
 Description: NGCP provider:CE Database entry and binlog cleanup
  Erase and dump database entries and MySQL binlogs.
 
@@ -49,5 +50,6 @@ Provides:
  ngcp-cleanup-tools,
 Replaces:
  ngcp-cleanup-tools,
+ ngcp-system-tools-pro (<< 8.5.0.0),
 Description: NGCP provider:PRO Database entry and binlog cleanup
  Erase and dump database entries and MySQL binlogs.
