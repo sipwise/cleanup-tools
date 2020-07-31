@@ -477,15 +477,19 @@ sub delete_loop {
     my $fieldinfo = $sth->fetchall_hashref('Field');
     $sth->finish;
     my @keycols = ();
+    my @upsertcols = ();
     foreach my $fieldname (keys %$fieldinfo) {
         if (uc($fieldinfo->{$fieldname}->{'Key'}) eq 'PRI') {
             push @keycols,$fieldname;
+        } else {
+            push @upsertcols,$fieldname;
         }
     }
 
     die "No primary key columns for table $table" unless @keycols;
 
     my $primary_key_cols = join(",",@keycols);
+    my $upsert_cols = join(",", map { $_ . '=VALUES(' . $_ . ')'; } @upsertcols);
 
     $dbh->do("create table if not exists $mtable like $table");
 
@@ -517,6 +521,7 @@ INSERT INTO $mtable
 SELECT s.*
   FROM $table AS s
  INNER JOIN $temp_table AS t USING ($primary_key_cols)
+ON DUPLICATE KEY UPDATE $upsert_cols
 SQL
                 or die "Failed to insert into monthly table $mtable: " . $DBI::errstr;
             $dbh->do(<<SQL)
