@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (9.1.0.0+0~mr9.1.0.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [37594ac] TT#88050 Remove dependencies on obsolete packages
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 31 Aug 2020 21:52:45 +0200
+
 ngcp-cleanup-tools (9.0.0.0+0~mr9.0.0.0) unstable; urgency=medium
 
   * New release.
