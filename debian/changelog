@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (8.5.3.0+0~mr8.5.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [470c0d5] TT#88001 support backup of tables with additional unique constraints
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Oct 2020 14:27:08 +0200
+
 ngcp-cleanup-tools (8.5.2.0+0~mr8.5.2.0) unstable; urgency=medium
 
   * New release.
