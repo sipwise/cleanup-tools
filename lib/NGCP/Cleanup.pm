@@ -516,7 +516,8 @@ SQL
                 or die "Failed to create temporary table $temp_table: " . $DBI::errstr;
         }
         if ($size > 0) {
-            $dbh->do(<<SQL)
+            if (scalar @upsertcols) {
+                $dbh->do(<<SQL)
 INSERT INTO $mtable
 SELECT s.*
   FROM $table AS s
@@ -524,6 +525,15 @@ SELECT s.*
 ON DUPLICATE KEY UPDATE $upsert_cols
 SQL
                 or die "Failed to insert into monthly table $mtable: " . $DBI::errstr;
+            } else {
+                $dbh->do(<<SQL)
+INSERT IGNORE INTO $mtable
+SELECT s.*
+  FROM $table AS s
+ INNER JOIN $temp_table AS t USING ($primary_key_cols)
+SQL
+                or die "Failed to insert into monthly table $mtable: " . $DBI::errstr;                
+            }
             $dbh->do(<<SQL)
 DELETE d.*
   FROM $table AS d
@@ -645,7 +655,7 @@ sub cleanup_table {
     my $deleted_rows = 0;
 
     while (1) {
-        my $aff;
+        my $aff = 0;
         if ($col_mode eq "time") {
             $aff = $dbh->do(<<SQL, undef, $cleanup_days);
 DELETE FROM $table WHERE $col < date(date_sub(now(), interval ? day)) $limit
