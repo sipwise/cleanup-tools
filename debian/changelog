@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (7.5.2.4+0~mr7.5.2.4) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [9c8880d] TT#126350 fix upserting tables with degree=primary degree
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 16 Jun 2021 12:25:25 +0200
+
 ngcp-cleanup-tools (7.5.2.3+0~mr7.5.2.3) unstable; urgency=medium
 
   [ Rene Krenn ]
