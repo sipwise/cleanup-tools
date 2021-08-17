@@ -655,7 +655,7 @@ SQL
 DELETE FROM $table WHERE $col < unix_timestamp(date(date_sub(now(), interval ? day))) $limit
 SQL
         }
-        $self->error("Cannot delete: $DBI:errstr") if $DBI::err;
+        $self->error("Cannot delete: $DBI::errstr") if $DBI::err;
         $aff //= 0;
         $deleted_rows += $aff;
         last unless $aff > 0;
