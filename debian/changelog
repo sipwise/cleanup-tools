@@ -1,3 +1,13 @@
+ngcp-cleanup-tools (10.0.1.0+0~mr10.0.1.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [f476aad] TT#126350 fix upserting tables with degree=primary degree
+
+  [ Kirill Solomko ]
+  * [f3da280] TT#121854 fix DBI::errstr typo
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Aug 2021 16:49:05 +0200
+
 ngcp-cleanup-tools (10.0.0.0+0~mr10.0.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
