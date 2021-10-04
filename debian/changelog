@@ -1,3 +1,9 @@
+ngcp-cleanup-tools (8.5.7.0+0~mr8.5.7.0) unstable; urgency=medium
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Oct 2021 14:48:57 +0200
+
 ngcp-cleanup-tools (8.5.6.0+0~mr8.5.6.0) unstable; urgency=medium
 
   * New release.
