@@ -256,6 +256,16 @@ sub check_table_exists {
     return $pvalue;
 }
 
+sub get_table_row_format {
+    my ($self, $table) = @_;
+
+    my ($row_format) = $self->fetch_row(
+        'information_schema', 'tables', 'row_format',
+        "where table_schema = 'accounting' and table_name = '$table'");
+
+    return $row_format;
+}
+
 sub check_partition_exists {
     my ($self, $table, $pname) = @_;
 
@@ -264,6 +274,16 @@ sub check_partition_exists {
         "where table_schema = 'accounting' and table_name = '$table' and partition_name = '$pname'");
 
     return $pvalue;
+}
+
+sub get_partition_row_format {
+    my ($self, $table, $pname) = @_;
+
+    my ($row_format) = $self->fetch_row(
+        'information_schema', 'innodb_sys_tables', 'row_format',
+        "where name = 'accounting/$table#P#$pname'");
+
+    return $row_format;
 }
 
 sub check_table_partitioned {
@@ -449,8 +469,15 @@ sub backup_partition {
                 # drop partitioning layout inherited from copied table creation
                 $dbh->do("alter table $mtable remove partitioning");
             }
-            $dbh->do("alter table $table exchange partition $pname with table $mtable");
-            die "Cannot exchange partition $table -> $mtable: ".$DBI::errstr if $DBI::err;
+            my $mtable_row_format = lc($self->get_table_row_format($mtable));
+            my $partition_row_format = lc($self->get_partition_row_format($table,$pname));
+            if ($mtable_row_format ne $partition_row_format) {
+                $self->info("table $mtable row_format ($mtable_row_format) differs from table $table partition $pname row_format ($partition_row_format), fallback to the table backup method");
+                $self->delete_loop($table, $bm);
+            } else {
+                $dbh->do("alter table $table exchange partition $pname with table $mtable");
+                die "Cannot exchange partition $table -> $mtable: ".$DBI::errstr if $DBI::err;
+            }
         }
     }
 }
