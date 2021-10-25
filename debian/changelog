@@ -1,3 +1,11 @@
+ngcp-cleanup-tools (0.17.4.2+0~mr4.5.4.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [324da58] TT#19706 refactor to day-based processing of months
+  * [ebab6fb] TT#21817 acc-cleanup - sleep to mitigate repl. lag
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Oct 2021 14:52:51 +0200
+
 ngcp-cleanup-tools (0.17.4.1+0~mr4.5.4.1) unstable; urgency=medium
 
   * New release.
