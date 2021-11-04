@@ -8,6 +8,5 @@
 
 # TT#72908 Change permissions of /ngcp-data/backup/cdr to 0700
 # We want backups to only be readable by the root user, when possible.
-override_dh_fixperms:
-	dh_fixperms
+execute_after_dh_fixperms:
 	chmod -v 0700 debian/ngcp-cleanup-tools-*/ngcp-data/backup/cdr
