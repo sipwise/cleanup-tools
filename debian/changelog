@@ -1,3 +1,14 @@
+ngcp-cleanup-tools (10.2.1.0+0~mr10.2.1.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [12de989] TT#145102 handle row_format mismatch (table/partition)
+
+  [ Guillem Jover ]
+  * [8c55580] TT#124273 Update packaging for bullseye
+  * [0c1a845] TT#124273 Use execute_after_ instead of override_ for dh command
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Nov 2021 14:16:36 +0100
+
 ngcp-cleanup-tools (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
 
   * New release.
