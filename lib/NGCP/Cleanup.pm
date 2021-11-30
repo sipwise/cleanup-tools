@@ -493,8 +493,7 @@ sub delete_loop {
     my $col_mode = $self->env('time-column-mode');
 
     my $mstart = $bm->strftime('%Y-%m-01 00:00:00');
-    my $mend   = $bm->add(months => 1)->subtract(seconds => 1)
-                          ->strftime('%Y-%m-%d %H:%M:%S');
+    my $mend   = $bm->add(months => 1)->strftime('%Y-%m-%d %H:%M:%S');
     my $mtable = $table . '_' . $bm->strftime('%Y%m');
 
     $self->debug("table=$table backup=$mtable");
@@ -528,7 +527,7 @@ sub delete_loop {
 CREATE TEMPORARY TABLE $temp_table AS
 (SELECT $primary_key_cols
    FROM $table
-  WHERE $col BETWEEN ? AND ?
+  WHERE $col >= ? AND $col < ?
  $limit)
 SQL
                 or die "Failed to create temporary table $temp_table: " . $DBI::errstr;
@@ -537,7 +536,7 @@ SQL
 CREATE TEMPORARY TABLE $temp_table AS
 (SELECT $primary_key_cols
    FROM $table
-  WHERE $col BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?)
+  WHERE $col >= UNIX_TIMESTAMP(?) AND $col < UNIX_TIMESTAMP(?)
  $limit)
 SQL
                 or die "Failed to create temporary table $temp_table: " . $DBI::errstr;
