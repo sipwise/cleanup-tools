@@ -1,3 +1,13 @@
+ngcp-cleanup-tools (8.5.3.2+0~mr8.5.3.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [f0e2f8f] TT#121854 check delete from non-existing table
+
+  [ Rene Krenn ]
+  * [2c77eb6] TT#126350 fix upserting tables with degree=primary degree
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 Dec 2021 14:59:31 +0100
+
 ngcp-cleanup-tools (8.5.3.1+0~mr8.5.3.1) unstable; urgency=medium
 
   * New release.
