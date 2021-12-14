@@ -1,3 +1,14 @@
+ngcp-cleanup-tools (8.5.3.3+0~mr8.5.3.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [6817252] TT#121854 fix DBI::errstr typo
+
+  [ Rene Krenn ]
+  * [5cf37dc] TT#145102 handle row_format mismatch (table/partition)
+  * [4de1c9e] TT#153851 cleanup stuck with 23:59:59.xxx records
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Dec 2021 11:23:43 +0100
+
 ngcp-cleanup-tools (8.5.3.2+0~mr8.5.3.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
