@@ -764,8 +764,8 @@ SQL
             next if (($time + $cleanup_days*86400) > $now);
 
             if ($cleanup_mode eq "mysql") {
-                my @query_data = map { $data{$_} } @cols;
-                $query .= "('" . join("','", @query_data) . "'),";
+                my @query_data = map { quote_field($data{$_},",","'","\\"); } @cols;
+                $query .= "(" . join(",", @query_data) . "),";
             }
 
             $vals{$key} = {
@@ -808,6 +808,46 @@ SQL
         $self->debug("redis=$scan_keys mode=$cleanup_mode deleted rows=$deleted_rows");
     }
     return;
+}
+
+sub quote_field {
+    my ($field,$sep,$quotes,$escape_symbol) = @_;
+    if (defined $quotes and length($quotes) > 0) {
+        if (defined $escape_symbol and length($escape_symbol) > 0) {
+            if (defined $field and length($field) > 0) {
+                foreach my $escape ($escape_symbol,$quotes) {
+                    my $escape_re = quotemeta($escape); #fun
+                    $field =~ s/($escape_re)/$escape_symbol$1/g;
+                }
+                $field = $quotes . $field . $quotes;
+            } else {
+                $field = $quotes . $quotes;
+            }
+        } else {
+            if (defined $field and length($field) > 0) {
+                $field = $quotes . $field . $quotes;
+            } else {
+                $field = $quotes . $quotes;
+            }
+        }
+    } else {
+        if (defined $escape_symbol and length($escape_symbol) > 0) {
+            if (defined $field and length($field) > 0) {
+                foreach my $escape ($escape_symbol,$sep) {
+                    my $escape_re = quotemeta($escape); #fun
+                    $field =~ s/($escape_re)/$escape_symbol$1/g;
+                }
+            } else {
+                $field = '';
+            }
+        } else {
+            if (not defined $field or length($field) == 0) {
+                $field = '';
+            }
+        }
+    }
+    return $field;
+
 }
 
 1;
