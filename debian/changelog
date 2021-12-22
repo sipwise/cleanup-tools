@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (8.5.3.4+0~mr8.5.3.4) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [074d6fb] TT#155902 escape values in redis-to-SQL backups
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 Dec 2021 15:05:00 +0100
+
 ngcp-cleanup-tools (8.5.3.3+0~mr8.5.3.3) unstable; urgency=medium
 
   [ Kirill Solomko ]
