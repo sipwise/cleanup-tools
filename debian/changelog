@@ -1,3 +1,11 @@
+ngcp-cleanup-tools (10.4.0.0+0~mr10.4.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [74f22ad] TT#153851 cleanup stuck with 23:59:59.xxx records
+  * [1936391] TT#155902 escape values in redis-to-SQL backups
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Jan 2022 16:54:10 +0100
+
 ngcp-cleanup-tools (10.3.0.0+0~mr10.3.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
