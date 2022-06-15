@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (9.5.1.2+0~mr9.5.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [8aa7572] TT#121854 fix DBI::errstr typo
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Jun 2022 16:07:00 +0200
+
 ngcp-cleanup-tools (9.5.1.1+0~mr9.5.1.1) unstable; urgency=medium
 
   * New release.
