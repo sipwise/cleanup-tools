@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (8.5.3.5+0~mr8.5.3.5) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [6c05584] TT#187551 trunacte long data from redis
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 05 Aug 2022 14:12:24 +0200
+
 ngcp-cleanup-tools (8.5.3.4+0~mr8.5.3.4) unstable; urgency=medium
 
   [ Rene Krenn ]
