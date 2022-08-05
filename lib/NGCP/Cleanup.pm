@@ -739,7 +739,7 @@ SQL
         $cursor = shift @{ $res };
         my $keys = shift @{ $res };
 
-        my $sql = "INSERT INTO $table (" . join(',', @cols) . ") VALUES ";
+        my $sql = "INSERT IGNORE INTO $table (" . join(',', @cols) . ") VALUES ";
 
         my %vals = ();
         foreach my $key (@{ $keys }) {
