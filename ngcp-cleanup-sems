@@ -10,13 +10,17 @@ my $service_restart = 1;
 lprint("=====================");
 lprint("script start");
 
+my $server_name = `ngcpcfg get database.key_value.flavor`;
+chomp($server_name);
+$server_name or die("dictionary server not found");
+
 # find bind IP from redis config file
 
 my ($server_ip, $port);
 
 {
 	my $fd;
-	open($fd, '<', '/etc/redis/redis.conf') or die("couldn't open redis config: $!");
+	open($fd, '<', "/etc/$server_name/$server_name.conf") or die("couldn't open $server_name config: $!");
 	my @conf = <$fd>;
 	close($fd);
 	my @bind = grep {/^bind /} @conf;
