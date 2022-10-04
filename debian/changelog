@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (11.1.1.0+0~mr11.1.1.0) unstable; urgency=medium
+
+  [ Fabricio Santolin da Silva ]
+  * [26d9146] MT#55358 Find the running dictionary server and use its config
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 04 Oct 2022 13:49:29 +0200
+
 ngcp-cleanup-tools (11.1.0.0+0~mr11.1.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
