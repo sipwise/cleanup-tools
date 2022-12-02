@@ -1,3 +1,14 @@
+ngcp-cleanup-tools (9.5.6.2+0~mr9.5.6.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [2ae57fe] TT#126350 fix upserting tables with degree=primary degree
+  * [df247b0] TT#145102 handle row_format mismatch (table/partition)
+  * [db5f42c] TT#153851 cleanup stuck with 23:59:59.xxx records
+  * [d2caf91] TT#155902 escape values in redis-to-SQL backups
+  * [c4585a5] TT#187551 trunacte long data from redis
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 02 Dec 2022 16:19:08 +0100
+
 ngcp-cleanup-tools (9.5.6.1+0~mr9.5.6.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
