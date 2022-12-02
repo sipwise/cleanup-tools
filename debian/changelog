@@ -1,3 +1,18 @@
+ngcp-cleanup-tools (8.5.8.2+0~mr8.5.8.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3315395] TT#121854 check delete from non-existing table
+  * [84a89bb] TT#121854 fix DBI::errstr typo
+
+  [ Rene Krenn ]
+  * [5631c08] TT#126350 fix upserting tables with degree=primary degree
+  * [3bc7fe7] TT#145102 handle row_format mismatch (table/partition)
+  * [7fef47b] TT#153851 cleanup stuck with 23:59:59.xxx records
+  * [7a02464] TT#155902 escape values in redis-to-SQL backups
+  * [99608f2] TT#187551 trunacte long data from redis
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 02 Dec 2022 15:58:07 +0100
+
 ngcp-cleanup-tools (8.5.8.1+0~mr8.5.8.1) unstable; urgency=medium
 
   * New release.
