@@ -1,3 +1,13 @@
+ngcp-cleanup-tools (7.5.8.3+0~mr7.5.8.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [d777485] TT#145102 handle row_format mismatch (table/partition)
+  * [6643875] TT#153851 cleanup stuck with 23:59:59.xxx records
+  * [ae47cb5] TT#155902 escape values in redis-to-SQL backups
+  * [db5e7a0] TT#187551 trunacte long data from redis
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 12 Jan 2023 12:23:25 +0100
+
 ngcp-cleanup-tools (7.5.8.2+0~mr7.5.8.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
