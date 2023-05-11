@@ -744,7 +744,7 @@ SQL
         my $sql_ok = $cleanup_mode eq "mysql" && $dbh->do($sql);
 
         if ($cleanup_mode eq "delete" || $sql_ok) {
-            foreach my $key (@{ $keys }) {
+            foreach my $key (keys %vals) {
                 # delete direct entry
                 $redis->del($key);
 
