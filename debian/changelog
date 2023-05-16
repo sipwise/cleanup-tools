@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (9.5.6.3+0~mr9.5.6.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [88d6256] MT#57401 fix redis cleanup-days logic
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 May 2023 12:15:52 +0200
+
 ngcp-cleanup-tools (9.5.6.2+0~mr9.5.6.2) unstable; urgency=medium
 
   [ Rene Krenn ]
