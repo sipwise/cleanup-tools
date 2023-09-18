@@ -587,13 +587,16 @@ sub archive_dump {
     my $pass = $self->env('pass') // $self->env('password');
     my $host = $self->env('host');
 
-    while (1) {
-        my $now = DateTime->now(time_zone => 'local');
-        my $bm = $now->clone;
+    my $now = DateTime->now(time_zone => 'local');
+    my $bm = $now->clone;
+    while ($bm->strftime('%Y%m') ge '198001') {
+        $now = DateTime->now(time_zone => 'local');
+        $bm = $now->clone;
         $bm->subtract(months => $month)->truncate(to => "month");
         my $mtable = $table . "_" . $bm->strftime('%Y%m');
         my $res = $dbh->selectcol_arrayref("show table status like ?", undef, $mtable);
-        ($res && @$res && $res->[0]) or last;
+        $month++;
+        ($res && @$res && $res->[0]) or next;
         if ($target ne '/dev/null') {
             my $fname = sprintf("%s/%s.%s.sql", $target,
                                     $mtable, $now->strftime("%Y%m%d%H%M%S"));
@@ -621,7 +624,6 @@ sub archive_dump {
         }
         $self->debug("drop table=$mtable");
         $dbh->do("drop table $mtable");
-        $month++;
     }
 }
 
