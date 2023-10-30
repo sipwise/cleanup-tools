@@ -10,9 +10,7 @@ my $service_restart = 1;
 lprint("=====================");
 lprint("script start");
 
-my $server_name = `ngcpcfg get database.key_value.flavor`;
-chomp($server_name);
-$server_name or die("dictionary server not found");
+my $server_name = 'keydb';
 
 # find bind IP from redis config file
 
