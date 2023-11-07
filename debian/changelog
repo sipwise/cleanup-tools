@@ -1,24 +1,13 @@
-ngcp-cleanup-tools (12.0.3.0+0~mr12.0.3.0) unstable; urgency=medium
-
-  * New release.
-
- -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Oct 2023 17:04:05 +0100
-
-ngcp-cleanup-tools (12.0.2.0+0~mr12.0.2.0) unstable; urgency=medium
+ngcp-cleanup-tools (12.0.0.0+0~mr12.0.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
   * [d57a768] MT#58299 do not stop archiving upon a missing table
 
   [ Guillem Jover ]
   * [867c283] MT#58356 Update packaging for bookworm
+  * [69d936e] MT#57982 Remove database.key_value.flavor config knob usage
 
- -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 15 Oct 2023 08:22:28 +0200
-
-ngcp-cleanup-tools (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
-
-  * New release.
-
- -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Aug 2023 18:03:08 +0200
+ -- Mykola Malkov <mmalkov@sipwise.com>  Tue, 07 Nov 2023 16:13:14 +0200
 
 ngcp-cleanup-tools (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
 
