@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (12.2.0.0+0~mr12.2.0.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [4f85012] MT#57982 Remove database.key_value.flavor config knob usage
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 29 Nov 2023 13:35:35 +0100
+
 ngcp-cleanup-tools (12.1.0.0+0~mr12.1.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
