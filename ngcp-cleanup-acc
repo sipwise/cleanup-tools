@@ -8,7 +8,7 @@ my $config_file = '/etc/ngcp-cleanup-tools/acc-cleanup.conf';
 
 my $c;
 eval {
-    $c = new NGCP::Cleanup(config_file => $config_file);
+    $c = NGCP::Cleanup->new(config_file => $config_file);
     $c->process;
 };
 if ($@) {
