@@ -51,7 +51,8 @@ if [ ! -r "${CFG_FILE}" ] ; then
    echo "ERROR: Can not read the configuration file" >&2
    my_exit 1
 fi
-   source "${CFG_FILE}"
+# shellcheck disable=SC1090
+source "${CFG_FILE}"
 
 # Defining MySQL client connection parameters
 OPTS=(--defaults-extra-file="${PWD_FILE}" -h"${MY_DBHOST}" -s -N -e)
