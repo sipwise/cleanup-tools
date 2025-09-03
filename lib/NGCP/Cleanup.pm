@@ -493,7 +493,7 @@ sub delete_loop {
     my $col_mode = $self->env('time-column-mode');
 
     my $mstart = $bm->strftime('%Y-%m-01 00:00:00');
-    my $mend   = $bm->add(months => 1)->strftime('%Y-%m-%d %H:%M:%S');
+    my $mend   = $bm->clone->add(months => 1)->strftime('%Y-%m-%d %H:%M:%S');
     my $mtable = $table . '_' . $bm->strftime('%Y%m');
 
     $self->debug("table=$table backup=$mtable");
