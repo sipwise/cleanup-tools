@@ -1,3 +1,10 @@
+ngcp-cleanup-tools (13.4.1.2+0~mr13.4.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [18b18ab] MT#63507 fix delete_loop copying records to next month table
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 04 Sep 2025 10:38:41 +0200
+
 ngcp-cleanup-tools (13.4.1.1+0~mr13.4.1.1) unstable; urgency=medium
 
   * New release.
