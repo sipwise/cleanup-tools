@@ -1,12 +1,10 @@
 Source: ngcp-cleanup-tools
 Section: utils
-Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Rules-Requires-Root: no
 Build-Depends:
  debhelper-compat (= 13),
  libmodule-build-perl,
-Standards-Version: 4.6.2
+Standards-Version: 4.7.2
 Homepage: https://www.sipwise.com/
 Vcs-Browser: https://github.com/sipwise/cleanup-tools.git
 Vcs-Git: https://github.com/sipwise/cleanup-tools.git
@@ -24,9 +22,9 @@ Depends:
  ${perl:Depends},
 Conflicts:
  ngcp-cleanup-tools,
-Provides:
- ngcp-cleanup-tools,
 Replaces:
+ ngcp-cleanup-tools,
+Provides:
  ngcp-cleanup-tools,
 Description: NGCP provider:CE Database entry and binlog cleanup
  Erase and dump database entries and MySQL binlogs.
@@ -44,9 +42,9 @@ Depends:
  ${perl:Depends},
 Conflicts:
  ngcp-cleanup-tools,
-Provides:
- ngcp-cleanup-tools,
 Replaces:
+ ngcp-cleanup-tools,
+Provides:
  ngcp-cleanup-tools,
 Description: NGCP provider:PRO Database entry and binlog cleanup
  Erase and dump database entries and MySQL binlogs.
