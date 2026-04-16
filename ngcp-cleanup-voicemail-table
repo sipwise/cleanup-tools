@@ -10,7 +10,7 @@ set -eu
 PID_FILE='/var/lock/voicemail-cleanup.pid'
 PWD_FILE='/etc/mysql/sipwise_extra.cnf'
 CFG_FILE='/etc/ngcp-cleanup-tools/voicemail-table-cleanup.conf'
-MYSQL="$(which mysql)"
+MYSQL=mysql
 QUERY_COUNT=1
 
 #Duplicating output to logs
@@ -26,6 +26,11 @@ my_exit() {
 }
 
 echo " $(date): Starting the new process"
+
+if ! command -v "${MYSQL}" >/dev/null ; then
+  echo "ERROR: Cannot find ${MYSQL}!" >&2
+  exit 1
+fi
 
 if [ -e "${PID_FILE}" ] ; then
   echo "ERROR: The lock file exists." >&2
