@@ -1,7 +1,7 @@
 package NGCP::Cleanup;
 
-use strict;
-use warnings;
+use v5.40;
+
 use English;
 use DBI;
 use DateTime;

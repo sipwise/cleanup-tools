@@ -8,6 +8,7 @@ my $builder = Module::Build->new(
     dist_author       => 'Kirill Solomko <ksolomko@sipwise.com>',
     dist_version_from => 'lib/NGCP/Cleanup.pm',
     requires          => {
+        perl        => '5.040',
     },
 );
 $builder->create_build_script;
