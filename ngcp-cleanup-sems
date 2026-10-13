@@ -10,7 +10,7 @@ my $service_restart = 1;
 lprint("=====================");
 lprint("script start");
 
-my $server_name = 'keydb';
+my $server_name = 'valkey';
 
 # find bind IP from redis config file
 
